@@ -1,8 +1,27 @@
 # CFC — Where Vision Meets Prosperity
 
-Static marketing site for CFC, led by Edlawit Sefiu. Built on the same
-architecture as `amg-wealth`: a single `index.html`, no build step, deployed
-on Netlify.
+Static marketing site for CFC, led by Edlawit Sefiu. Single `index.html`, no
+build step, deployed on Netlify.
+
+## Design direction
+
+Deliberately **not** a recolour of `amg-wealth`. Where AMG alternates dark and
+cream sections around a bento grid, CFC is **night-first** — no light sections
+at all, tonal navy bands under a fixed starfield, with a cool silver-blue
+running alongside the champagne so it never reads as "AMG in blue".
+
+The moon is the organising idea, not a decoration:
+
+- **The Phases** — the client process told as lunar phases (new -> waxing
+  crescent -> first quarter -> full), drawn as real SVG moons. The signature
+  section, and the thing AMG has no equivalent of.
+- **Disciplines** carry moon-phase glyphs instead of line icons.
+- **Centred hero** under orbital rings and a moon glow, rather than AMG's
+  left-text / right-photo split.
+- **Arched portrait frames** — a dome crop echoing the crescent.
+- **A scroll-progress moon**, bottom right, that waxes as you move down.
+- Type is Bodoni Moda (kept: it matches the didone in her logo) + **Outfit**,
+  replacing AMG's Jost.
 
 ## Structure
 

@@ -7,90 +7,82 @@
 <meta name="description" content="CFC partners with families and professionals to build wealth, protect what matters, and design a legacy that outlives the moment. Led by Edlawit Sefiu.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
 :root{
-  --ink:#04060E;
-  --navy-deep:#070B18;
-  --navy:#0D1630;
-  --navy-mid:#132048;
-  --navy-soft:#1C2C58;
+  --void:#02040C;
+  --night:#060B1A;
+  --night-2:#0A1226;
+  --midnight:#101C3A;
+  --slate:#1A2A50;
   --gold:#B99534;
   --champagne:#D9BE72;
   --champagne-bright:#F0DFAC;
-  --champagne-pale:#F8F0DA;
-  --cream:#F2F0EA;
-  --cream-deep:#E4E2DB;
-  --white:#FFFFFF;
+  --silver:#A8BEDC;
+  --silver-dim:#63769A;
+  --cream:#EFEDE6;
   --ease-glide:cubic-bezier(0.32,0.72,0,1);
   --ease-out-soft:cubic-bezier(0.22,1,0.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Jost',sans-serif;font-weight:400;
-  background:var(--ink);color:var(--cream);line-height:1.6;
+  font-family:'Outfit',sans-serif;font-weight:300;
+  background:var(--void);color:var(--cream);line-height:1.65;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 body.locked{overflow:hidden}
-::selection{background:var(--champagne);color:var(--ink)}
+::selection{background:var(--champagne);color:var(--void)}
 
-/* ── film grain ─────────────────────────────────── */
 .grain{
-  position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.038;
+  position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.04;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+/* starfield — the whole site sits under a night sky */
+.stars{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%,rgba(240,223,172,.85),transparent),
+    radial-gradient(1.2px 1.2px at 68% 12%,rgba(168,190,220,.7),transparent),
+    radial-gradient(1px 1px at 32% 62%,rgba(255,255,255,.55),transparent),
+    radial-gradient(1.6px 1.6px at 84% 48%,rgba(240,223,172,.6),transparent),
+    radial-gradient(1px 1px at 54% 82%,rgba(168,190,220,.5),transparent),
+    radial-gradient(1.3px 1.3px at 7% 74%,rgba(240,223,172,.5),transparent),
+    radial-gradient(1px 1px at 92% 82%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.1px 1.1px at 44% 33%,rgba(168,190,220,.45),transparent);
+  animation:twinkle 9s ease-in-out infinite;
+}
+@keyframes twinkle{0%,100%{opacity:.55}50%{opacity:.32}}
 
-/* ══ INTRO — MOON ECLIPSE ════════════════════════ */
+/* ══ INTRO ═══════════════════════════════════════ */
 .intro{
   position:fixed;inset:0;z-index:200;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:radial-gradient(900px 700px at 50% 42%,#101A38 0%,#070B18 55%,#02030A 100%);
+  background:radial-gradient(900px 700px at 50% 42%,#12203F 0%,#070B18 55%,#010208 100%);
   transition:opacity 1s var(--ease-glide),visibility 1s;
 }
 .intro.done{opacity:0;visibility:hidden;pointer-events:none}
-.intro::after{ /* starfield */
-  content:'';position:absolute;inset:0;pointer-events:none;opacity:0;
-  background-image:
-    radial-gradient(1.4px 1.4px at 18% 24%,rgba(240,223,172,.9),transparent),
-    radial-gradient(1.2px 1.2px at 72% 18%,rgba(240,223,172,.7),transparent),
-    radial-gradient(1px 1px at 34% 72%,rgba(255,255,255,.65),transparent),
-    radial-gradient(1.6px 1.6px at 86% 62%,rgba(240,223,172,.75),transparent),
-    radial-gradient(1px 1px at 58% 86%,rgba(255,255,255,.5),transparent),
-    radial-gradient(1.2px 1.2px at 8% 62%,rgba(240,223,172,.55),transparent);
-  transition:opacity 1.6s ease .3s;
-}
-.intro.play::after{opacity:1}
-
 .intro-stage{position:relative;width:min(82vw,400px);display:flex;align-items:center;justify-content:center;aspect-ratio:762/474}
-
-/* two crescent moons sweep in and converge, then hand off to the real mark */
 .intro-moons{position:absolute;inset:0;display:block;overflow:visible}
 .moon-in{opacity:0;transform-box:fill-box;transform-origin:center}
 .moon-in-l{transform:translateX(-230px) rotate(-42deg) scale(.7)}
 .moon-in-r{transform:translateX(230px) rotate(42deg) scale(.7)}
-.intro.play .moon-in{
-  animation:moonPass 1.9s var(--ease-glide) .1s both;
-}
+.intro.play .moon-in{animation:moonPass 1.9s var(--ease-glide) .1s both}
 @keyframes moonPass{
   0%{opacity:0}
   28%{opacity:.55}
   62%{opacity:.32;transform:translateX(0) rotate(0) scale(1)}
   100%{opacity:0;transform:translateX(0) rotate(0) scale(1.06)}
 }
-
-/* the actual CFC logo */
 .intro-logo{
   position:relative;width:100%;height:auto;display:block;
-  opacity:0;transform:scale(.9);
-  filter:drop-shadow(0 24px 48px rgba(0,0,0,.55));
+  opacity:0;transform:scale(.9);filter:drop-shadow(0 24px 48px rgba(0,0,0,.55));
 }
 .intro.play .intro-logo{
   opacity:1;transform:scale(1);
   transition:opacity 1.1s var(--ease-out-soft) .95s,transform 1.5s var(--ease-glide) .95s;
 }
-/* shimmer confined to the logo's own ink via an alpha mask */
 .intro-sheen{
   position:absolute;inset:0;pointer-events:none;opacity:0;
   background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.85) 50%,transparent 62%);
@@ -99,328 +91,327 @@ body.locked{overflow:hidden}
   -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
 }
 .intro.play .intro-sheen{animation:sheenSweep 1.6s var(--ease-glide) 1.75s both}
-@keyframes sheenSweep{
-  0%{opacity:0;background-position:-140% 0}
-  20%{opacity:1}
-  100%{opacity:0;background-position:140% 0}
-}
+@keyframes sheenSweep{0%{opacity:0;background-position:-140% 0}20%{opacity:1}100%{opacity:0;background-position:140% 0}}
 .intro-skip{
   position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
-  background:none;border:none;cursor:pointer;
-  font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;
-  letter-spacing:.3em;text-transform:uppercase;color:rgba(242,240,234,.32);
+  background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(239,237,230,.32);
   padding:.7rem 1.2rem;opacity:0;transition:opacity .6s ease,color .4s ease;
 }
 .intro.play .intro-skip{opacity:1;transition-delay:1.2s}
 .intro-skip:hover{color:var(--champagne)}
 
-/* ── typography ─────────────────────────────────── */
-.serif{font-family:'Bodoni Moda',serif;font-weight:600;line-height:1.06;letter-spacing:-0.012em}
-.serif i{font-style:normal;font-weight:600}
+/* ══ TYPE ════════════════════════════════════════ */
+.serif{font-family:'Bodoni Moda',serif;font-weight:500;line-height:1.04;letter-spacing:-0.018em}
+.serif i{font-style:italic;font-weight:400}
 .gold-text{
-  background:linear-gradient(105deg,#8C6F24 0%,#D9BE72 44%,#F4E7C2 54%,#B08F30 100%);
+  background:linear-gradient(105deg,#8C6F24 0%,#D9BE72 42%,#F6EAC6 52%,#B08F30 100%);
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;
 }
 .eyebrow{
-  display:inline-flex;align-items:center;gap:.6rem;
-  border:1px solid rgba(217,190,114,.34);border-radius:8px;
-  padding:.42rem 1.1rem;font-size:10px;font-weight:500;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--champagne-bright);
-  background:rgba(217,190,114,.06);
+  display:inline-flex;align-items:center;gap:.7rem;
+  font-size:10px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--silver);
 }
-.eyebrow::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--champagne)}
-.light .eyebrow{color:#7C6316;border-color:rgba(124,99,22,.3);background:rgba(185,149,52,.07)}
+.eyebrow::before,.eyebrow::after{content:'';height:1px;width:26px;background:linear-gradient(90deg,transparent,rgba(217,190,114,.7))}
+.eyebrow::after{background:linear-gradient(90deg,rgba(217,190,114,.7),transparent)}
 
-/* ── reveal ─────────────────────────────────────── */
-.reveal{opacity:0;transform:translateY(56px);filter:blur(10px);transition:opacity 1s var(--ease-out-soft),transform 1s var(--ease-out-soft),filter 1s var(--ease-out-soft)}
+.reveal{opacity:0;transform:translateY(46px);filter:blur(8px);transition:opacity 1.1s var(--ease-out-soft),transform 1.1s var(--ease-out-soft),filter 1.1s var(--ease-out-soft)}
 .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
 .reveal[data-d="1"]{transition-delay:.1s}.reveal[data-d="2"]{transition-delay:.2s}
 .reveal[data-d="3"]{transition-delay:.3s}.reveal[data-d="4"]{transition-delay:.4s}
 
-/* ── buttons ────────────────────────────────────── */
+/* ══ BUTTONS ═════════════════════════════════════ */
 .btn{
-  display:inline-flex;align-items:center;gap:.85rem;border-radius:12px;
-  padding:.55rem .6rem .55rem 1.7rem;
-  font-family:'Jost',sans-serif;font-size:.92rem;font-weight:500;
+  display:inline-flex;align-items:center;gap:.85rem;border-radius:100px;
+  padding:.62rem .62rem .62rem 1.8rem;
+  font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:400;letter-spacing:.02em;
   text-decoration:none;cursor:pointer;border:none;
   transition:transform .5s var(--ease-glide),box-shadow .5s var(--ease-glide),background .5s var(--ease-glide);
 }
 .btn:active{transform:scale(.98)}
-.btn .orb{width:38px;height:38px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;transition:transform .5s var(--ease-glide)}
-.btn:hover .orb{transform:translate(3px,-1px) scale(1.06)}
-.btn svg{width:15px;height:15px}
-.btn-gold{background:linear-gradient(120deg,#A8842A,#E2CB85 55%,#B99534);color:#15100A;box-shadow:0 12px 28px -14px rgba(2,4,12,.6),inset 0 1px 1px rgba(255,255,255,.42)}
-.btn-gold:hover{box-shadow:0 18px 38px -14px rgba(2,4,12,.66),inset 0 1px 1px rgba(255,255,255,.42)}
-.btn-gold .orb{background:rgba(8,6,2,.14)}
-.btn-ghost{background:rgba(255,255,255,.05);color:var(--cream);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
-.btn-ghost:hover{background:rgba(255,255,255,.1)}
-.btn-ghost .orb{background:rgba(255,255,255,.08)}
-.btn-dark{background:var(--navy);color:var(--champagne-pale);box-shadow:inset 0 1px 1px rgba(255,255,255,.13),0 12px 30px -12px rgba(13,22,48,.6)}
-.btn-dark .orb{background:rgba(217,190,114,.17)}
+.btn .orb{width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;transition:transform .5s var(--ease-glide)}
+.btn:hover .orb{transform:translate(3px,-1px)}
+.btn svg{width:14px;height:14px}
+.btn-gold{background:linear-gradient(120deg,#A8842A,#E4CE89 55%,#B99534);color:#140F06;box-shadow:0 14px 34px -16px rgba(217,190,114,.5)}
+.btn-gold:hover{box-shadow:0 20px 44px -16px rgba(217,190,114,.62)}
+.btn-gold .orb{background:rgba(8,6,2,.15)}
+.btn-ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1px rgba(168,190,220,.28)}
+.btn-ghost:hover{background:rgba(168,190,220,.08);box-shadow:inset 0 0 0 1px rgba(168,190,220,.5)}
+.btn-ghost .orb{background:rgba(168,190,220,.12)}
 
-/* ── nav ────────────────────────────────────────── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;padding-top:1.4rem;pointer-events:none}
-.nav-pill{
-  pointer-events:auto;display:flex;align-items:center;gap:2.2rem;
-  background:rgba(7,11,24,.6);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,.08);border-radius:16px;
-  padding:.55rem .6rem .55rem 1.5rem;
-  box-shadow:0 20px 50px -20px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.07);
+/* ══ SCROLL MOON ═════════════════════════════════ */
+.scroll-moon{
+  position:fixed;right:1.6rem;bottom:1.6rem;z-index:70;
+  width:52px;height:52px;pointer-events:none;
+  opacity:0;transition:opacity .7s var(--ease-glide);
 }
-.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.scroll-moon.show{opacity:1}
+.scroll-moon svg{width:100%;height:100%;display:block}
+.scroll-moon .sm-pct{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:.56rem;font-weight:400;letter-spacing:.06em;color:var(--void);
+  mix-blend-mode:difference;
+}
+@media(max-width:768px){.scroll-moon{width:40px;height:40px;right:1rem;bottom:1rem}}
+
+/* ══ NAV ═════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 4vw;pointer-events:none;transition:padding .6s var(--ease-glide),background .6s var(--ease-glide)}
+nav.stuck{padding:.9rem 4vw;background:rgba(2,4,12,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(168,190,220,.1)}
+.brand{display:flex;align-items:center;gap:.8rem;text-decoration:none;pointer-events:auto}
 .monogram{width:46px;height:41px;flex:none;display:flex;align-items:center;justify-content:center}
 .monogram img{width:100%;height:100%;object-fit:contain;display:block}
-.brand-name{font-size:.82rem;font-weight:600;letter-spacing:.2em;color:var(--cream)}
-.brand-name small{display:block;font-size:7.5px;font-weight:300;letter-spacing:.24em;color:var(--champagne);text-transform:uppercase}
-.nav-links{display:flex;gap:1.8rem;list-style:none}
-.nav-links a{font-size:.82rem;font-weight:500;color:rgba(242,240,234,.72);text-decoration:none;transition:color .4s var(--ease-glide)}
+.brand-name{font-family:'Bodoni Moda',serif;font-size:1.1rem;font-weight:500;letter-spacing:.22em;color:var(--cream)}
+.brand-name small{display:block;font-family:'Outfit',sans-serif;font-size:7px;font-weight:300;letter-spacing:.26em;color:var(--silver-dim);text-transform:uppercase;margin-top:2px}
+.nav-right{display:flex;align-items:center;gap:2.4rem;pointer-events:auto}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{position:relative;font-size:.84rem;font-weight:300;color:rgba(239,237,230,.66);text-decoration:none;transition:color .4s var(--ease-glide)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:-6px;height:1px;background:var(--champagne);transition:right .5s var(--ease-glide)}
 .nav-links a:hover{color:var(--champagne-bright)}
-.nav-cta{font-size:.8rem;padding:.45rem .5rem .45rem 1.2rem}
-.nav-cta .orb{width:30px;height:30px}
-.burger{display:none;pointer-events:auto;width:44px;height:44px;border-radius:12px;cursor:pointer;background:rgba(7,11,24,.65);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);position:relative}
-.burger span{position:absolute;left:13px;right:13px;height:1.5px;background:var(--champagne-pale);border-radius:2px;transition:transform .55s var(--ease-glide),top .55s var(--ease-glide)}
+.nav-links a:hover::after{right:0}
+.burger{display:none;pointer-events:auto;width:44px;height:44px;border-radius:50%;cursor:pointer;background:rgba(10,18,38,.7);border:1px solid rgba(168,190,220,.18);position:relative}
+.burger span{position:absolute;left:13px;right:13px;height:1.2px;background:var(--champagne-bright);border-radius:2px;transition:transform .55s var(--ease-glide),top .55s var(--ease-glide)}
 .burger span:nth-child(1){top:18px}
 .burger span:nth-child(2){top:25px}
 .burger.open span:nth-child(1){top:21px;transform:rotate(45deg)}
 .burger.open span:nth-child(2){top:21px;transform:rotate(-45deg)}
 .menu-overlay{
-  position:fixed;inset:0;z-index:90;background:rgba(4,6,14,.9);
+  position:fixed;inset:0;z-index:90;background:rgba(2,4,12,.94);
   backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
   display:flex;flex-direction:column;justify-content:center;padding:0 8vw;
   opacity:0;visibility:hidden;transition:opacity .6s var(--ease-glide),visibility .6s;
 }
 .menu-overlay.open{opacity:1;visibility:visible}
 .menu-overlay a{
-  font-family:'Bodoni Moda',serif;font-size:clamp(2.2rem,7vw,3.6rem);color:var(--cream);
-  text-decoration:none;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07);
-  opacity:0;transform:translateY(48px);
+  font-family:'Bodoni Moda',serif;font-size:clamp(2.2rem,8vw,3.4rem);color:var(--cream);
+  text-decoration:none;padding:.55rem 0;border-bottom:1px solid rgba(168,190,220,.1);
+  opacity:0;transform:translateY(40px);
   transition:opacity .7s var(--ease-out-soft),transform .7s var(--ease-out-soft),color .4s;
 }
 .menu-overlay a:hover{color:var(--champagne-bright)}
 .menu-overlay.open a{opacity:1;transform:translateY(0)}
-.menu-overlay.open a:nth-child(1){transition-delay:.1s}
-.menu-overlay.open a:nth-child(2){transition-delay:.16s}
-.menu-overlay.open a:nth-child(3){transition-delay:.22s}
-.menu-overlay.open a:nth-child(4){transition-delay:.28s}
-.menu-overlay.open a:nth-child(5){transition-delay:.34s}
+.menu-overlay.open a:nth-child(1){transition-delay:.08s}
+.menu-overlay.open a:nth-child(2){transition-delay:.14s}
+.menu-overlay.open a:nth-child(3){transition-delay:.2s}
+.menu-overlay.open a:nth-child(4){transition-delay:.26s}
+.menu-overlay.open a:nth-child(5){transition-delay:.32s}
 
-/* ── shells ─────────────────────────────────────── */
-.shell{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:1.1rem;padding:.45rem;box-shadow:0 40px 80px -40px rgba(0,0,0,.65)}
-.shell>.core{border-radius:calc(1.1rem - .45rem);overflow:hidden;position:relative;box-shadow:inset 0 1px 1px rgba(255,255,255,.12)}
-.light .shell{background:rgba(13,22,48,.05);border-color:rgba(13,22,48,.1);box-shadow:0 40px 80px -50px rgba(13,22,48,.35)}
-
-
-/* ── photo placeholder (until the real headshot is dropped in) ── */
-.core.no-photo{
-  min-height:560px;display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(520px 380px at 50% 22%,rgba(28,44,88,.7),transparent 68%),linear-gradient(165deg,#16224A,#04060E);
-}
-.founder-core.no-photo{min-height:620px}
-.core.no-photo::after{
-  content:'';width:132px;height:146px;opacity:.2;
-  background:url(assets/logo-mark.webp) center/contain no-repeat;
-}
-@media(max-width:1024px){.core.no-photo,.founder-core.no-photo{min-height:420px}}
-
-/* ── hero ───────────────────────────────────────── */
+/* ══ HERO — centred, under an orbit ══════════════ */
 .hero{
-  position:relative;min-height:100dvh;display:flex;align-items:center;
-  padding:9rem 6vw 6rem;overflow:hidden;
+  position:relative;min-height:100dvh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:10rem 6vw 7rem;overflow:hidden;z-index:1;
   background:
-    radial-gradient(1100px 700px at 80% 6%,rgba(28,44,88,.55),transparent 62%),
-    radial-gradient(900px 600px at 6% 96%,rgba(185,149,52,.12),transparent 56%),
-    linear-gradient(175deg,#0A1128 0%,#04060E 58%,#0D1630 100%);
+    radial-gradient(760px 760px at 50% 34%,rgba(26,42,80,.6),transparent 62%),
+    radial-gradient(1000px 620px at 50% 108%,rgba(217,190,114,.09),transparent 60%),
+    linear-gradient(180deg,#01020A 0%,#060B1A 48%,#0A1226 100%);
 }
-/* ambient drifting moons */
-.moons{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
-.moons svg{position:absolute;opacity:.05}
-.moon-a{width:520px;top:-8%;right:-6%;animation:drift 34s ease-in-out infinite}
-.moon-b{width:340px;bottom:-10%;left:-4%;animation:drift 44s ease-in-out infinite reverse}
-@keyframes drift{
-  0%,100%{transform:translate(0,0) rotate(0)}
-  50%{transform:translate(-26px,34px) rotate(11deg)}
+.orbits{position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);width:min(150vw,1180px);aspect-ratio:1;pointer-events:none;z-index:0}
+.orbits circle{fill:none;stroke:rgba(168,190,220,.14)}
+.orbits .o2{stroke:rgba(217,190,114,.13)}
+.orbit-dot{fill:var(--champagne);transform-box:fill-box;transform-origin:center}
+.orbits .spin{animation:orbit 34s linear infinite;transform-origin:600px 600px}
+.orbits .spin-2{animation:orbit 52s linear infinite reverse;transform-origin:600px 600px}
+@keyframes orbit{to{transform:rotate(360deg)}}
+/* the big moon the hero sits under */
+.hero-moon{
+  position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);
+  width:min(76vw,440px);aspect-ratio:1;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 38% 32%,rgba(240,223,172,.17),rgba(217,190,114,.07) 44%,transparent 70%);
+  box-shadow:0 0 140px 40px rgba(217,190,114,.07);
 }
-.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:5rem;align-items:center;max-width:1340px;margin:0 auto;width:100%}
-.hero h1{font-size:clamp(3rem,6.2vw,5.4rem);margin:1.6rem 0 1.8rem;color:var(--white)}
-.hero p.lede{font-size:1.08rem;font-weight:300;color:rgba(242,240,234,.72);max-width:33rem;margin-bottom:2.6rem}
-.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
-.hero-media{position:relative}
-.hero-media .core{background:radial-gradient(600px 420px at 50% 0%,rgba(28,44,88,.5),transparent 66%),#04060E}
-.hero-portrait{display:block;width:100%;height:560px;object-fit:cover;object-position:center 18%}
-.hero-card{
-  position:absolute;left:-3.4rem;bottom:2.6rem;z-index:3;max-width:19rem;
-  background:rgba(7,11,24,.82);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(217,190,114,.3);border-radius:.9rem;padding:1.3rem 1.6rem;
-  box-shadow:0 30px 60px -25px rgba(0,0,0,.75),inset 0 1px 1px rgba(255,255,255,.1);
-}
-.hero-card .hc-eyebrow{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne);margin-bottom:.5rem}
-.hero-card .hc-title{font-family:'Bodoni Moda',serif;font-weight:600;font-size:1.35rem;line-height:1.1;color:var(--champagne-bright);margin-bottom:.6rem}
-.hero-card .lbl{font-size:.72rem;line-height:1.5;color:rgba(242,240,234,.62)}
-.scroll-hint{
-  position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:2;
-  font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(242,240,234,.4);
-  display:flex;flex-direction:column;align-items:center;gap:.7rem;
-}
-.scroll-hint::after{content:'';width:1px;height:44px;background:linear-gradient(to bottom,var(--champagne),transparent);animation:drip 2.4s var(--ease-glide) infinite}
+.hero-inner{position:relative;z-index:2;max-width:60rem;display:flex;flex-direction:column;align-items:center}
+.hero h1{font-size:clamp(2.9rem,8vw,6.4rem);margin:1.8rem 0 1.6rem;color:#fff}
+.hero p.lede{font-size:1.05rem;font-weight:300;color:rgba(239,237,230,.66);max-width:34rem;margin-bottom:2.8rem}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.scroll-cue{margin-top:4.5rem;display:flex;flex-direction:column;align-items:center;gap:.9rem;font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(239,237,230,.34);position:relative;z-index:2}
+.scroll-cue::after{content:'';width:1px;height:52px;background:linear-gradient(to bottom,var(--champagne),transparent);animation:drip 2.6s var(--ease-glide) infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ── marquee ────────────────────────────────────── */
-.marquee{position:relative;overflow:hidden;padding:2.4rem 0;background:linear-gradient(180deg,#04060E,#0A1128);border-top:1px solid rgba(217,190,114,.14);border-bottom:1px solid rgba(217,190,114,.14)}
-.marquee-label{text-align:center;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,240,234,.42);margin-bottom:1.8rem}
+/* ══ ARCHED PORTRAIT ═════════════════════════════ */
+.arch{
+  position:relative;border-radius:50% 50% 14px 14px / 42% 42% 8px 8px;overflow:hidden;
+  background:linear-gradient(170deg,#16244A,#0A1226);
+  box-shadow:0 50px 100px -50px rgba(0,0,0,.85),inset 0 0 0 1px rgba(217,190,114,.22);
+}
+.arch::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(2,4,12,.82) 4%,transparent 46%)}
+.arch img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.arch.no-photo{
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(460px 340px at 50% 24%,rgba(26,42,80,.75),transparent 68%),linear-gradient(168deg,#16244A,#04060E);
+}
+.arch.no-photo::before{
+  content:'';width:52%;max-width:190px;aspect-ratio:343/307;opacity:.22;
+  background:url(assets/logo-mark.webp) center/contain no-repeat;
+}
+
+/* ══ SECTIONS ════════════════════════════════════ */
+section{position:relative;padding:9rem 6vw;z-index:1}
+.wrap{max-width:1280px;margin:0 auto}
+.band-1{background:linear-gradient(180deg,#0A1226,#060B1A)}
+.band-2{background:linear-gradient(180deg,#060B1A,#101C3A 55%,#0A1226)}
+.band-3{background:linear-gradient(180deg,#0A1226,#02040C)}
+.sec-head{max-width:50rem;margin-bottom:5rem}
+.sec-head.mid{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head h2{font-size:clamp(2.3rem,5vw,3.9rem);margin:1.5rem 0 1.2rem;color:#fff}
+.sec-head p{font-weight:300;color:rgba(239,237,230,.62);font-size:1.02rem;max-width:36rem}
+.sec-head.mid p{margin-left:auto;margin-right:auto}
+
+/* ══ DISCIPLINES — constellation, not bento ══════ */
+.constellation{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.disc{
+  position:relative;padding:2.6rem 2rem;border-radius:18px;
+  background:linear-gradient(168deg,rgba(26,42,80,.42),rgba(10,18,38,.5));
+  border:1px solid rgba(168,190,220,.12);
+  transition:transform .7s var(--ease-glide),border-color .7s var(--ease-glide),background .7s var(--ease-glide);
+  overflow:hidden;
+}
+.disc::before{
+  content:'';position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,rgba(217,190,114,.16),transparent 68%);
+  opacity:0;transition:opacity .7s var(--ease-glide);
+}
+.disc:hover{transform:translateY(-7px);border-color:rgba(217,190,114,.4);background:linear-gradient(168deg,rgba(32,52,98,.5),rgba(12,22,46,.6))}
+.disc:hover::before{opacity:1}
+.disc-phase{width:40px;height:40px;margin-bottom:1.6rem;display:block}
+.disc h3{font-family:'Bodoni Moda',serif;font-size:1.42rem;font-weight:500;color:#fff;margin-bottom:.8rem;position:relative}
+.disc p{font-size:.92rem;font-weight:300;color:rgba(239,237,230,.6);position:relative}
+.disc .idx{position:absolute;top:1.5rem;right:1.7rem;font-size:.66rem;letter-spacing:.2em;color:var(--silver-dim)}
+
+/* ══ THE PHASES — the signature section ══════════ */
+.phases{position:relative;margin-top:1rem}
+.phase-track{position:absolute;left:0;right:0;top:52px;height:1px;background:linear-gradient(90deg,transparent,rgba(217,190,114,.34) 12%,rgba(217,190,114,.34) 88%,transparent);z-index:0}
+.phase-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.phase{text-align:center;display:flex;flex-direction:column;align-items:center}
+.phase-moon{width:104px;height:104px;margin-bottom:1.9rem;position:relative;flex:none}
+.phase-moon svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 26px rgba(217,190,114,.3))}
+.phase:hover .phase-moon svg{filter:drop-shadow(0 0 38px rgba(217,190,114,.55))}
+.phase-moon svg *{transition:none}
+.phase-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--silver-dim);margin-bottom:.7rem}
+.phase h4{font-family:'Bodoni Moda',serif;font-size:1.42rem;font-weight:500;color:var(--champagne-bright);margin-bottom:.75rem}
+.phase p{font-size:.9rem;font-weight:300;color:rgba(239,237,230,.6);max-width:17rem}
+
+/* ══ MARQUEE ═════════════════════════════════════ */
+.marquee{position:relative;overflow:hidden;padding:2.6rem 0;background:var(--void);border-top:1px solid rgba(168,190,220,.1);border-bottom:1px solid rgba(168,190,220,.1);z-index:1}
+.marquee-label{text-align:center;font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--silver-dim);margin-bottom:1.9rem}
 .marquee-viewport{position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.marquee-track{display:flex;width:max-content;gap:4.5rem;animation:marquee 40s linear infinite}
+.marquee-track{display:flex;width:max-content;gap:4.5rem;animation:marquee 44s linear infinite}
 .marquee:hover .marquee-track{animation-play-state:paused}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.brand-logo{display:flex;align-items:center;justify-content:center;flex:none;height:52px;color:rgba(242,240,234,.55);font-family:'Bodoni Moda',serif;font-size:1.5rem;font-weight:600;white-space:nowrap;opacity:.7;transition:opacity .4s var(--ease-glide),color .4s var(--ease-glide)}
-.brand-logo:hover{opacity:1;color:var(--champagne-bright)}
+.brand-logo{display:flex;align-items:center;flex:none;height:44px;color:rgba(239,237,230,.42);font-family:'Bodoni Moda',serif;font-size:1.32rem;font-weight:400;white-space:nowrap;transition:color .4s var(--ease-glide)}
+.brand-logo:hover{color:var(--champagne-bright)}
 @media(prefers-reduced-motion:reduce){.marquee-track{animation:none}}
 
-/* ── stats ──────────────────────────────────────── */
-.stats{background:linear-gradient(120deg,#0A1128,#132048);border-top:1px solid rgba(217,190,114,.2);border-bottom:1px solid rgba(217,190,114,.2);padding:4.5rem 6vw}
-.stats-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:3rem}
+/* ══ STATS ═══════════════════════════════════════ */
+.stats{position:relative;padding:5.5rem 6vw;background:var(--void);z-index:1}
+.stats-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem}
 .stat{text-align:center;position:relative}
-.stat+.stat::before{content:'';position:absolute;left:-1.5rem;top:12%;bottom:12%;width:1px;background:rgba(217,190,114,.18)}
-.stat .num{font-family:'Bodoni Moda',serif;font-size:clamp(2.4rem,4vw,3.4rem);color:var(--champagne-bright)}
-.stat .lbl{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,240,234,.55);margin-top:.4rem}
+.stat+.stat::before{content:'';position:absolute;left:-1.25rem;top:16%;bottom:16%;width:1px;background:linear-gradient(180deg,transparent,rgba(168,190,220,.24),transparent)}
+.stat .num{font-family:'Bodoni Moda',serif;font-size:clamp(2.3rem,4vw,3.3rem);font-weight:500;color:var(--champagne-bright)}
+.stat .lbl{font-size:.63rem;letter-spacing:.26em;text-transform:uppercase;color:var(--silver-dim);margin-top:.5rem}
 
-/* ── sections ───────────────────────────────────── */
-section{padding:8.5rem 6vw}
-.wrap{max-width:1340px;margin:0 auto}
-.sec-head{max-width:52rem;margin-bottom:4.5rem}
-.sec-head h2{font-size:clamp(2.4rem,4.6vw,4rem);margin:1.4rem 0 1.2rem}
-.sec-head p{font-weight:300;color:rgba(242,240,234,.66);font-size:1.05rem;max-width:38rem}
-.light{
-  background:radial-gradient(900px 500px at 88% 0%,rgba(185,149,52,.07),transparent 56%),linear-gradient(160deg,#F4F3EF,#E8E7E2);
-  color:var(--navy);position:relative;
-}
-.light::before{
-  content:'';position:absolute;inset:0;pointer-events:none;opacity:.55;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='900' viewBox='0 0 1400 900'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M-50 180 C 300 120 480 320 820 240 S 1250 140 1500 260' stroke='%230D1630' stroke-opacity='.04' stroke-width='1.4'/%3E%3Cpath d='M-50 520 C 260 440 560 640 900 540 S 1300 460 1500 580' stroke='%23B99534' stroke-opacity='.07' stroke-width='1'/%3E%3Cpath d='M-50 780 C 340 700 540 880 880 790 S 1280 720 1500 830' stroke='%230D1630' stroke-opacity='.03' stroke-width='1.2'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat;
-}
-.light .sec-head p{color:rgba(13,22,48,.62)}
-.light h2,.light h3{color:var(--navy)}
-
-/* ── bento ──────────────────────────────────────── */
-.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:1.4rem}
-.bcard{position:relative;border-radius:1rem;padding:.4rem;background:rgba(255,255,255,.55);border:1px solid rgba(13,22,48,.09);box-shadow:0 30px 60px -45px rgba(13,22,48,.4);transition:transform .7s var(--ease-glide),box-shadow .7s var(--ease-glide)}
-.bcard:hover{transform:translateY(-6px);box-shadow:0 42px 70px -42px rgba(13,22,48,.5)}
-.bcard .core{height:100%;border-radius:calc(1rem - .4rem);padding:2.2rem;background:linear-gradient(165deg,#FFFFFF,#F0EFEA);box-shadow:inset 0 1px 1px rgba(255,255,255,.9);display:flex;flex-direction:column;position:relative;overflow:hidden}
-.bcard.dark .core{background:linear-gradient(155deg,#16224A,#0A1128);box-shadow:inset 0 1px 1px rgba(255,255,255,.1)}
-.bcard.dark{background:rgba(13,22,48,.35);border-color:rgba(217,190,114,.25)}
-.bcard.dark h3{color:var(--cream)}
-.bcard.dark p{color:rgba(242,240,234,.66)}
-.b-icon{width:52px;height:52px;border-radius:10px;margin-bottom:1.6rem;flex:none;background:linear-gradient(140deg,rgba(185,149,52,.17),rgba(185,149,52,.05));border:1px solid rgba(185,149,52,.36);display:flex;align-items:center;justify-content:center}
-.b-icon svg{width:22px;height:22px;stroke:var(--gold);stroke-width:1.1;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.bcard.dark .b-icon svg{stroke:var(--champagne)}
-.bcard h3{font-family:'Bodoni Moda',serif;font-size:1.5rem;font-weight:500;margin-bottom:.7rem}
-.bcard p{font-size:.92rem;font-weight:300;color:rgba(13,22,48,.62);flex:1}
-.b-link{margin-top:1.8rem;display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-decoration:none}
-.bcard.dark .b-link{color:var(--champagne)}
-.b-link svg{width:13px;height:13px;transition:transform .5s var(--ease-glide)}
-.bcard:hover .b-link svg{transform:translate(4px,-2px)}
-.b-6{grid-column:span 6}.b-4{grid-column:span 4}.b-8{grid-column:span 8}
-.b-tall .core{min-height:420px}
-.bcard img.bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}
-.bcard .img-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,6,14,.9) 18%,rgba(4,6,14,.18) 62%)}
-.bcard .over{position:relative;z-index:2;margin-top:auto}
-.spark{width:100%;height:64px;margin-top:1.2rem}
-
-/* ── founder split ──────────────────────────────── */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:5.5rem;align-items:center}
-.split .shell img{display:block;width:100%;height:620px;object-fit:cover;object-position:center 20%}
-.founder-core{background:radial-gradient(600px 400px at 50% 0%,rgba(28,44,88,.45),transparent 66%),#04060E;min-height:620px}
+/* ══ FOUNDER ═════════════════════════════════════ */
+.founder-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:5.5rem;align-items:center}
+.founder-grid .arch{height:620px}
 .founder-plate{
-  position:absolute;left:1.1rem;right:1.1rem;bottom:1.1rem;z-index:2;
-  background:rgba(7,11,24,.68);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(217,190,114,.32);border-radius:.7rem;padding:1rem 1.4rem;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.1),0 20px 40px -20px rgba(0,0,0,.75);
+  position:absolute;left:1.4rem;right:1.4rem;bottom:1.4rem;z-index:3;text-align:center;
+  padding:1.1rem 1.2rem;border-radius:12px;
+  background:rgba(2,4,12,.6);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(217,190,114,.28);
 }
-.founder-plate strong{display:block;font-family:'Bodoni Moda',serif;font-weight:500;font-size:1.15rem;color:var(--champagne-bright)}
-.founder-plate span{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,240,234,.65)}
-.split blockquote{font-family:'Bodoni Moda',serif;font-style:italic;font-size:1.35rem;line-height:1.5;color:var(--champagne-bright);border-left:2px solid var(--champagne);padding-left:1.6rem;margin:2.4rem 0}
-.pillars{display:flex;flex-direction:column;gap:1.1rem;margin-top:2.6rem}
-.pillar{display:flex;gap:1.1rem;align-items:flex-start}
-.pillar .tick{width:26px;height:26px;border-radius:50%;flex:none;margin-top:.15rem;background:rgba(217,190,114,.12);border:1px solid rgba(217,190,114,.42);display:flex;align-items:center;justify-content:center}
-.pillar .tick svg{width:11px;height:11px;stroke:var(--champagne-bright);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.pillar strong{display:block;font-size:.95rem;font-weight:600;color:var(--white)}
-.pillar span{font-size:.88rem;font-weight:300;color:rgba(242,240,234,.6)}
+.founder-plate strong{display:block;font-family:'Bodoni Moda',serif;font-weight:500;font-size:1.2rem;color:var(--champagne-bright)}
+.founder-plate span{font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--silver-dim)}
+.founder-grid blockquote{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:400;font-size:1.4rem;line-height:1.55;color:var(--champagne-bright);padding-left:1.8rem;border-left:1px solid rgba(217,190,114,.5);margin:2.6rem 0}
+.pillars{display:flex;flex-direction:column;gap:1.5rem;margin-top:2.8rem}
+.pillar{display:flex;gap:1.2rem;align-items:flex-start}
+.pillar .tick{width:30px;height:30px;flex:none;margin-top:.1rem}
+.pillar strong{display:block;font-size:.95rem;font-weight:500;color:#fff;margin-bottom:.15rem}
+.pillar span{font-size:.88rem;font-weight:300;color:rgba(239,237,230,.58)}
 
-/* ── process ────────────────────────────────────── */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
-.step{border-radius:1rem;padding:.4rem;background:rgba(255,255,255,.5);border:1px solid rgba(13,22,48,.09);transition:transform .7s var(--ease-glide)}
-.step:hover{transform:translateY(-6px)}
-.step .core{border-radius:calc(1rem - .4rem);background:linear-gradient(170deg,#fff,#EFEEE9);padding:2rem 1.7rem;height:100%;box-shadow:inset 0 1px 1px rgba(255,255,255,.9)}
-.step .n{font-family:'Bodoni Moda',serif;font-size:2.6rem;color:transparent;-webkit-text-stroke:1px var(--gold);display:block;margin-bottom:1.2rem}
-.step h4{font-family:'Bodoni Moda',serif;font-size:1.2rem;font-weight:500;color:var(--navy);margin-bottom:.6rem}
-.step p{font-size:.86rem;font-weight:300;color:rgba(13,22,48,.6)}
+/* ══ QUOTE ═══════════════════════════════════════ */
+.quote-sec{text-align:center;background:linear-gradient(180deg,#02040C,#0A1226 50%,#02040C)}
+.quote-sec .qmoon{width:64px;height:64px;margin:0 auto 2.4rem;opacity:.85}
+.quote-sec blockquote{font-family:'Bodoni Moda',serif;font-size:clamp(1.5rem,3.4vw,2.7rem);font-weight:400;font-style:italic;line-height:1.42;max-width:52rem;margin:0 auto;color:var(--cream)}
+.quote-sec cite{display:block;margin-top:2.6rem;font-style:normal;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--silver-dim)}
 
-/* ── quote ──────────────────────────────────────── */
-.quote-sec{text-align:center;position:relative;overflow:hidden;background:radial-gradient(800px 500px at 50% 120%,rgba(28,44,88,.5),transparent 62%),linear-gradient(180deg,#04060E,#0A1128)}
-.quote-sec .mark{font-family:'Bodoni Moda',serif;font-size:7rem;line-height:.4;color:var(--champagne);opacity:.5;display:block;margin-bottom:2rem}
-.quote-sec blockquote{font-family:'Bodoni Moda',serif;font-size:clamp(1.7rem,3.6vw,3rem);font-weight:400;font-style:italic;line-height:1.35;max-width:56rem;margin:0 auto;color:var(--cream)}
-.quote-sec cite{display:block;margin-top:2.6rem;font-style:normal;font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--champagne-bright)}
+/* ══ CTA ═════════════════════════════════════════ */
+.cta-sec{position:relative;text-align:center;overflow:hidden;background:linear-gradient(180deg,#02040C,#101C3A)}
+.cta-sec::before{
+  content:'';position:absolute;left:50%;bottom:-52%;transform:translateX(-50%);
+  width:min(120vw,900px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 40%,rgba(217,190,114,.2),transparent 62%);
+}
+.cta-sec .wrap{position:relative;z-index:2}
+.cta-sec h2{font-size:clamp(2.3rem,5.4vw,4.2rem);color:#fff;margin:1.6rem 0 1.3rem}
+.cta-sec p{font-weight:300;color:rgba(239,237,230,.66);max-width:33rem;margin:0 auto 3rem}
 
-/* ── CTA ────────────────────────────────────────── */
-.legacy{padding:0 6vw 8.5rem;background:#04060E}
-.legacy .shell{max-width:1340px;margin:0 auto}
-.legacy .core{padding:6.5rem 5rem;text-align:center;background:radial-gradient(700px 420px at 50% -10%,rgba(217,190,114,.16),transparent 62%),linear-gradient(160deg,#16224A,#080D1E)}
-.legacy h2{font-size:clamp(2.6rem,5vw,4.4rem);color:var(--white);margin:1.5rem 0 1.2rem}
-.legacy p{font-weight:300;color:rgba(242,240,234,.68);max-width:34rem;margin:0 auto 2.8rem}
-
-/* ── contact ────────────────────────────────────── */
+/* ══ CONTACT ═════════════════════════════════════ */
 .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:5rem;align-items:start}
-.contact-info h2{font-size:clamp(2.2rem,4vw,3.4rem);margin:1.4rem 0 1.2rem}
-.contact-info p{font-weight:300;color:rgba(13,22,48,.62);max-width:26rem;margin-bottom:2.4rem}
-.c-line{display:flex;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(13,22,48,.1);font-size:.94rem;color:var(--navy);text-decoration:none;transition:color .4s var(--ease-glide)}
-a.c-line:hover{color:var(--gold)}
-.c-line svg{width:18px;height:18px;stroke:var(--gold);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
-form.core{background:linear-gradient(165deg,#fff,#F0EFEA);padding:2.8rem;box-shadow:inset 0 1px 1px rgba(255,255,255,.9)}
+.contact-info h2{font-size:clamp(2.1rem,4.2vw,3.3rem);margin:1.5rem 0 1.3rem;color:#fff}
+.contact-info p{font-weight:300;color:rgba(239,237,230,.62);max-width:25rem;margin-bottom:2.6rem}
+.c-line{display:flex;align-items:center;gap:1.1rem;padding:1.05rem 0;border-bottom:1px solid rgba(168,190,220,.12);font-size:.93rem;font-weight:300;color:rgba(239,237,230,.82);text-decoration:none;transition:color .4s var(--ease-glide),padding-left .4s var(--ease-glide)}
+a.c-line:hover{color:var(--champagne-bright);padding-left:.4rem}
+.c-line svg{width:17px;height:17px;stroke:var(--champagne);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+form.night{
+  background:linear-gradient(168deg,rgba(26,42,80,.4),rgba(10,18,38,.55));
+  border:1px solid rgba(168,190,220,.14);border-radius:20px;padding:2.8rem;
+  box-shadow:0 50px 90px -55px rgba(0,0,0,.9);
+}
 .f-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
-.field{margin-bottom:1.1rem}
-.field label{display:block;font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(13,22,48,.55);margin-bottom:.5rem}
-.field input,.field select,.field textarea{width:100%;border:1px solid rgba(13,22,48,.14);border-radius:.5rem;background:rgba(255,255,255,.7);padding:.85rem 1.1rem;font-family:'Jost',sans-serif;font-size:.92rem;color:var(--navy);outline:none;transition:border-color .4s var(--ease-glide),box-shadow .4s var(--ease-glide)}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(185,149,52,.16)}
-.field textarea{resize:vertical;min-height:110px}
-.form-note{font-size:.75rem;color:rgba(13,22,48,.45);margin-top:1.2rem}
+.field{margin-bottom:1.2rem}
+.field label{display:block;font-size:.6rem;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:var(--silver-dim);margin-bottom:.55rem}
+.field input,.field select,.field textarea{
+  width:100%;border:none;border-bottom:1px solid rgba(168,190,220,.22);border-radius:0;
+  background:transparent;padding:.7rem .1rem;
+  font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:300;color:var(--cream);
+  outline:none;transition:border-color .4s var(--ease-glide);
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(239,237,230,.26)}
+.field select option{background:#0A1226;color:var(--cream)}
+.field input:focus,.field select:focus,.field textarea:focus{border-bottom-color:var(--champagne)}
+.field textarea{resize:vertical;min-height:96px}
+.form-note{font-size:.72rem;font-weight:300;color:var(--silver-dim);margin-top:1.3rem;text-align:center}
 
-/* ── footer ─────────────────────────────────────── */
-body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);padding:5rem 6vw 2.5rem}
-.foot-grid{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
-.foot-grid h5{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--champagne);margin-bottom:1.2rem;font-weight:600}
-.foot-grid a{display:block;font-size:.88rem;font-weight:300;color:rgba(242,240,234,.6);text-decoration:none;padding:.3rem 0;transition:color .4s}
+/* ══ FOOTER ══════════════════════════════════════ */
+body>footer{position:relative;background:var(--void);border-top:1px solid rgba(168,190,220,.1);padding:5rem 6vw 2.5rem;z-index:1}
+.foot-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(168,190,220,.08)}
+.foot-grid h5{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne);margin-bottom:1.3rem;font-weight:400}
+.foot-grid a{display:block;font-size:.87rem;font-weight:300;color:rgba(239,237,230,.55);text-decoration:none;padding:.32rem 0;transition:color .4s}
 .foot-grid a:hover{color:var(--champagne-bright)}
-.foot-brand p{font-size:.88rem;font-weight:300;color:rgba(242,240,234,.5);max-width:20rem;margin-top:1.2rem}
-.foot-bottom{max-width:1340px;margin:0 auto;padding-top:2.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.72rem;color:rgba(242,240,234,.35)}
+.foot-brand p{font-size:.87rem;font-weight:300;color:rgba(239,237,230,.45);max-width:20rem;margin-top:1.3rem}
+.foot-bottom{max-width:1280px;margin:0 auto;padding-top:2.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.7rem;font-weight:300;color:rgba(239,237,230,.3)}
 
-/* ── responsive ─────────────────────────────────── */
+/* ══ RESPONSIVE ══════════════════════════════════ */
 @media(max-width:1024px){
-  .hero-grid{grid-template-columns:1fr;gap:3.5rem}
-  .hero-portrait{height:420px}
-  .b-6,.b-4,.b-8{grid-column:span 12}
-  .split{grid-template-columns:1fr;gap:3rem}
-  .split .shell img,.founder-core{height:460px;min-height:0}
-  .steps{grid-template-columns:repeat(2,1fr)}
+  .constellation{grid-template-columns:repeat(2,1fr)}
+  .phase-grid{grid-template-columns:repeat(2,1fr);gap:3rem 2rem}
+  .phase-track{display:none}
+  .founder-grid{grid-template-columns:1fr;gap:3rem}
+  .founder-grid .arch{height:480px}
   .contact-grid{grid-template-columns:1fr;gap:3rem}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:2.5rem}
   .stat+.stat::before{display:none}
   .foot-grid{grid-template-columns:1fr 1fr}
-  .moon-a{width:340px}.moon-b{width:230px}
 }
 @media(max-width:768px){
-  section{padding:6rem 1.2rem}
-  .hero{padding:7.5rem 1.2rem 5rem}
-  .nav-links,.nav-cta{display:none}
+  section{padding:6rem 1.3rem}
+  .hero{padding:8rem 1.3rem 5rem}
+  .nav-links{display:none}
   .burger{display:block}
-  .nav-pill{gap:1rem;width:calc(100vw - 5.6rem);justify-content:flex-start}
-  nav{justify-content:space-between;padding:1.2rem 1.2rem 0;gap:.8rem}
-  .hero-card{position:static;margin-top:1.2rem;max-width:none}
-  .steps{grid-template-columns:1fr}
-  .legacy{padding:0 1.2rem 6rem}
-  .legacy .core{padding:4rem 1.6rem}
+  /* the gold CTA was shoving the burger off-screen at 375px; it lives in the menu */
+  .nav-right>.btn-gold{display:none}
+  .nav-right{gap:1rem}
+  nav,nav.stuck{padding:1rem 1.3rem}
+  .brand-name{font-size:1rem}
+  .monogram{width:40px;height:36px}
+  .constellation{grid-template-columns:1fr}
+  .phase-grid{grid-template-columns:1fr;gap:3rem}
+  .founder-grid .arch{height:420px}
   .foot-grid{grid-template-columns:1fr}
-  form.core{padding:1.6rem}
+  form.night{padding:1.7rem}
   .f-row{grid-template-columns:1fr}
+  .stats{padding:4rem 1.3rem}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001ms!important;transition-duration:.001ms!important}
@@ -431,8 +422,9 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
 </head>
 <body>
 <div class="grain"></div>
+<div class="stars" aria-hidden="true"></div>
 
-<!-- ══ INTRO — MOON ECLIPSE ══ -->
+<!-- ══ INTRO ══ -->
 <div class="intro" id="intro" aria-hidden="true">
   <div class="intro-stage">
     <svg class="intro-moons" viewBox="0 0 360 240" fill="none" aria-hidden="true">
@@ -449,69 +441,72 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
   <button class="intro-skip" id="introSkip" type="button">Skip</button>
 </div>
 
+<!-- ══ SCROLL MOON ══ -->
+<div class="scroll-moon" id="scrollMoon" aria-hidden="true">
+  <svg viewBox="0 0 100 100">
+    <defs>
+      <clipPath id="waxClip"><rect id="waxRect" x="0" y="0" width="0" height="100"/></clipPath>
+    </defs>
+    <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(168,190,220,.3)" stroke-width="1.2"/>
+    <circle cx="50" cy="50" r="34" fill="#D9BE72" clip-path="url(#waxClip)" opacity=".9"/>
+  </svg>
+  <span class="sm-pct" id="scrollPct">0</span>
+</div>
+
 <!-- ══ NAV ══ -->
-<nav>
-  <div class="nav-pill">
-    <a class="brand" href="#top">
-      <span class="monogram"><img src="assets/logo-mark.webp" alt="CFC monogram"></span>
-      <span class="brand-name">CFC<small>Where Vision Meets Prosperity</small></span>
-    </a>
+<nav id="nav">
+  <a class="brand" href="#top">
+    <span class="monogram"><img src="assets/logo-mark.webp" alt="CFC monogram"></span>
+    <span class="brand-name">CFC<small>Where Vision Meets Prosperity</small></span>
+  </a>
+  <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
+      <li><a href="#disciplines">Disciplines</a></li>
+      <li><a href="#phases">The Phases</a></li>
       <li><a href="#founder">Founder</a></li>
-      <li><a href="#approach">Approach</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="btn btn-gold nav-cta">Book a Consultation
+    <a href="#contact" class="btn btn-gold">Book a Consultation
       <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
     </a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
   </div>
-  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
 </nav>
 <div class="menu-overlay" id="menu">
-  <a href="#services">Services</a>
+  <a href="#disciplines">Disciplines</a>
+  <a href="#phases">The Phases</a>
   <a href="#founder">Founder</a>
-  <a href="#approach">Approach</a>
   <a href="#contact">Contact</a>
   <a href="#contact" style="color:var(--champagne-bright)">Book a Consultation ↗</a>
 </div>
 
 <!-- ══ HERO ══ -->
 <header class="hero" id="top">
-  <div class="moons" aria-hidden="true">
-    <svg class="moon-a" viewBox="0 0 200 200"><path d="M53.26 -84.64 A100 100 0 1 0 53.26 84.64 A86 86 0 1 1 53.26 -84.64 Z" transform="translate(100,100) scale(.9)" fill="#D9BE72"/></svg>
-    <svg class="moon-b" viewBox="0 0 200 200"><path d="M53.26 -84.64 A100 100 0 1 0 53.26 84.64 A86 86 0 1 1 53.26 -84.64 Z" transform="translate(100,100) scale(-.9,.9)" fill="#D9BE72"/></svg>
-  </div>
-  <div class="hero-grid">
-    <div>
-      <span class="eyebrow reveal">Wealth Strategy &amp; Legacy Planning</span>
-      <h1 class="serif reveal" data-d="1">Where vision meets<br><i class="gold-text">prosperity</i>.</h1>
-      <p class="lede reveal" data-d="2">CFC partners with families and professionals to build wealth with intention, protect what has already been earned, and design a legacy that outlives the moment it was made.</p>
-      <div class="hero-ctas reveal" data-d="3">
-        <a href="#contact" class="btn btn-gold">Begin Your Blueprint
-          <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-        </a>
-        <a href="#services" class="btn btn-ghost">Explore Services
-          <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14m-6-6l6 6 6-6"/></svg></span>
-        </a>
-      </div>
-    </div>
-    <div class="hero-media reveal" data-d="2">
-      <div class="shell"><div class="core">
-        <img class="hero-portrait" src="assets/edlawit.jpg" alt="Edlawit Sefiu, Founder of CFC" loading="eager"
-             onerror="this.style.display='none';this.closest('.core').classList.add('no-photo')">
-      </div></div>
-      <div class="hero-card">
-        <div class="hc-eyebrow">Proud Partner</div>
-        <div class="hc-title">Integrity Marketing Group</div>
-        <div class="lbl">Backed by the nation's largest independent distributor of life &amp; supplemental health insurance</div>
-      </div>
+  <div class="hero-moon" aria-hidden="true"></div>
+  <svg class="orbits" viewBox="0 0 1200 1200" aria-hidden="true">
+    <circle class="o1" cx="600" cy="600" r="330"/>
+    <circle class="o2" cx="600" cy="600" r="470"/>
+    <circle cx="600" cy="600" r="580" stroke="rgba(168,190,220,.07)"/>
+    <g class="spin"><circle class="orbit-dot" cx="930" cy="600" r="3.5"/></g>
+    <g class="spin-2"><circle class="orbit-dot" cx="600" cy="130" r="2.6" opacity=".7"/></g>
+  </svg>
+  <div class="hero-inner">
+    <span class="eyebrow reveal">Wealth Strategy &amp; Legacy Planning</span>
+    <h1 class="serif reveal" data-d="1">Where vision meets <i class="gold-text">prosperity</i></h1>
+    <p class="lede reveal" data-d="2">CFC partners with families and professionals to build wealth with intention, protect what has already been earned, and design a legacy that outlives the moment it was made.</p>
+    <div class="hero-ctas reveal" data-d="3">
+      <a href="#contact" class="btn btn-gold">Begin Your Blueprint
+        <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+      <a href="#phases" class="btn btn-ghost">See the Phases
+        <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14m-6-6l6 6 6-6"/></svg></span>
+      </a>
     </div>
   </div>
-  <div class="scroll-hint">Scroll</div>
+  <div class="scroll-cue">Scroll</div>
 </header>
 
-<!-- ══ CARRIER MARQUEE ══ -->
+<!-- ══ CARRIERS ══ -->
 <div class="marquee">
   <div class="marquee-label">Carrier Partners</div>
   <div class="marquee-viewport">
@@ -542,62 +537,112 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
   </div>
 </div>
 
-<!-- ══ SERVICES ══ -->
-<section class="light" id="services">
+<!-- ══ DISCIPLINES ══ -->
+<section class="band-1" id="disciplines">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">The CFC Portfolio</span>
-      <h2 class="serif">Five disciplines.<br>One <i>enduring</i> outcome.</h2>
-      <p>Every engagement begins with the same question: what will your money mean a generation from now?</p>
+      <span class="eyebrow">What We Practice</span>
+      <h2 class="serif">Five disciplines,<br>held in <i>orbit</i>.</h2>
+      <p>Each one stands alone. Together they hold a family's whole financial life in balance.</p>
     </div>
-    <div class="bento">
-      <div class="bcard b-8 b-tall dark reveal">
-        <div class="core">
-          <img class="bimg" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1400&auto=format&fit=crop" alt="Financial planning documents" loading="lazy">
-          <div class="img-scrim"></div>
-          <div class="over">
-            <div class="b-icon"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-8M15 8h5v5"/></svg></div>
-            <h3>Wealth Accumulation</h3>
-            <p>Indexed strategies, tax-advantaged vehicles, and disciplined cash-flow design that compound quietly in the background while you get on with your life.</p>
-            <a class="b-link" href="#contact">Build Wealth <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+    <div class="constellation">
+      <div class="disc reveal">
+        <span class="idx">01</span>
+        <svg class="disc-phase" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#D9BE72" stroke-width="1.2" opacity=".55"/><path d="M20 5a15 15 0 0 1 0 30 11 11 0 0 0 0-30z" fill="#D9BE72" opacity=".9"/></svg>
+        <h3>Wealth Accumulation</h3>
+        <p>Indexed strategies, tax-advantaged vehicles, and disciplined cash-flow design that compound quietly in the background while you get on with your life.</p>
+      </div>
+      <div class="disc reveal" data-d="1">
+        <span class="idx">02</span>
+        <svg class="disc-phase" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#D9BE72" stroke-width="1.2" opacity=".55"/><path d="M20 5a15 15 0 0 1 0 30z" fill="#D9BE72" opacity=".9"/></svg>
+        <h3>Asset Protection</h3>
+        <p>Life insurance architecture, living benefits, and risk transfer that place a vault around what you have already built — before the storm, not after it.</p>
+      </div>
+      <div class="disc reveal" data-d="2">
+        <span class="idx">03</span>
+        <svg class="disc-phase" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#D9BE72" stroke-width="1.2" opacity=".55"/><path d="M20 5a15 15 0 0 1 0 30 15 15 0 0 1-8-4 19 19 0 0 0 0-22 15 15 0 0 1 8-4z" fill="#D9BE72" opacity=".9"/></svg>
+        <h3>Retirement Income</h3>
+        <p>Tax-efficient income you cannot outlive. Rollovers, IRAs, and annuity strategies aligned to your horizon rather than to a sales quota.</p>
+      </div>
+      <div class="disc reveal" data-d="1">
+        <span class="idx">04</span>
+        <svg class="disc-phase" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#D9BE72" stroke-width="1.2" opacity=".55"/><circle cx="20" cy="20" r="15" fill="#D9BE72" opacity=".9"/></svg>
+        <h3>Financial Literacy</h3>
+        <p>Understanding is the first inheritance. Workshops, one-on-one coaching, and family money conversations that make every generation fluent.</p>
+      </div>
+      <div class="disc reveal" data-d="2">
+        <span class="idx">05</span>
+        <svg class="disc-phase" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#D9BE72" stroke-width="1.2" opacity=".55"/><path d="M20 5a15 15 0 0 0 0 30 11 11 0 0 1 0-30z" fill="#D9BE72" opacity=".9"/></svg>
+        <h3>Generational Legacy</h3>
+        <p>Beneficiary design and wealth-transfer planning that turn one lifetime of work into a family's inheritance of options.</p>
+      </div>
+      <div class="disc reveal" data-d="3" style="display:flex;flex-direction:column;justify-content:center;background:linear-gradient(168deg,rgba(217,190,114,.12),rgba(10,18,38,.5));border-color:rgba(217,190,114,.32)">
+        <h3 style="font-size:1.28rem">Not sure where you sit?</h3>
+        <p style="margin-bottom:1.6rem">One conversation maps all five against where your family actually stands today.</p>
+        <a href="#contact" class="btn btn-gold" style="align-self:flex-start;font-size:.84rem">Find Out
+          <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THE PHASES — signature ══ -->
+<section class="band-2" id="phases">
+  <div class="wrap">
+    <div class="sec-head mid reveal">
+      <span class="eyebrow">The Private Client Process</span>
+      <h2 class="serif">Wealth arrives in <i>phases</i>.</h2>
+      <p>Nothing is full on the first night. We work the way the moon does — one deliberate phase at a time, each one visible before the next begins.</p>
+    </div>
+    <div class="phases">
+      <div class="phase-track" aria-hidden="true"></div>
+      <div class="phase-grid">
+        <div class="phase reveal">
+          <div class="phase-moon">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/>
+              <circle cx="50" cy="50" r="34" fill="rgba(217,190,114,.06)"/>
+            </svg>
           </div>
+          <div class="phase-label">New Moon</div>
+          <h4>Discovery</h4>
+          <p>A private conversation to map your assets, obligations, and the legacy you intend to leave. Nothing is recommended yet.</p>
         </div>
-      </div>
-      <div class="bcard b-4 b-tall reveal" data-d="1">
-        <div class="core">
-          <div class="b-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
-          <h3>Asset Protection</h3>
-          <p>Life insurance architecture, living benefits, and risk transfer that place a vault around what you have already built — before the storm, not after it.</p>
-          <svg class="spark" viewBox="0 0 260 64" fill="none" preserveAspectRatio="none"><path d="M0 54 C 30 50 44 34 70 38 S 118 20 146 24 208 8 260 6" stroke="#B99534" stroke-opacity=".55" stroke-width="1.6"/><path d="M0 54 C 30 50 44 34 70 38 S 118 20 146 24 208 8 260 6 L 260 64 L 0 64 Z" fill="url(#fadeg)"/><defs><linearGradient id="fadeg" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse"><stop stop-color="#B99534" stop-opacity=".18"/><stop offset="1" stop-color="#B99534" stop-opacity="0"/></linearGradient></defs></svg>
-          <a class="b-link" href="#contact">Protect Assets <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-        </div>
-      </div>
-      <div class="bcard b-4 reveal">
-        <div class="core">
-          <div class="b-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-          <h3>Retirement Income</h3>
-          <p>Tax-efficient income you cannot outlive. 401(k) rollovers, IRAs, and annuity strategies aligned to your horizon rather than to a sales quota.</p>
-          <a class="b-link" href="#contact">Plan Retirement <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-        </div>
-      </div>
-      <div class="bcard b-4 reveal" data-d="1">
-        <div class="core">
-          <div class="b-icon"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 012-2h13v13H6a2 2 0 00-2 2zm0 0a2 2 0 002 2h13"/><path d="M9 8h6M9 12h4"/></svg></div>
-          <h3>Financial Literacy</h3>
-          <p>Understanding is the first inheritance. Workshops, one-on-one coaching, and family money conversations that make every generation fluent.</p>
-          <a class="b-link" href="#contact">Get Educated <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-        </div>
-      </div>
-      <div class="bcard b-4 dark reveal" data-d="2">
-        <div class="core">
-          <img class="bimg" src="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1200&auto=format&fit=crop" alt="Multi-generational family" loading="lazy">
-          <div class="img-scrim"></div>
-          <div class="over">
-            <div class="b-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0112 6a5.5 5.5 0 019.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg></div>
-            <h3>Generational Legacy</h3>
-            <p>Beneficiary design and wealth-transfer planning that turn one lifetime of work into a family's inheritance of options.</p>
-            <a class="b-link" href="#contact">Design Legacy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        <div class="phase reveal" data-d="1">
+          <div class="phase-moon">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/>
+              <path d="M50 16a34 34 0 0 1 0 68 25 25 0 0 0 0-68z" fill="#D9BE72"/>
+            </svg>
           </div>
+          <div class="phase-label">Waxing Crescent</div>
+          <h4>Architecture</h4>
+          <p>A blueprint built to your horizon — protection first, growth second, transfer always — modelled before a dollar moves.</p>
+        </div>
+        <div class="phase reveal" data-d="2">
+          <div class="phase-moon">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/>
+              <path d="M50 16a34 34 0 0 1 0 68z" fill="#D9BE72"/>
+            </svg>
+          </div>
+          <div class="phase-label">First Quarter</div>
+          <h4>Execution</h4>
+          <p>White-glove implementation of every vehicle, handled end to end, so nothing falls between the cracks or the carriers.</p>
+        </div>
+        <div class="phase reveal" data-d="3">
+          <div class="phase-moon">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/>
+              <circle cx="50" cy="50" r="34" fill="#D9BE72"/>
+              <circle cx="50" cy="50" r="34" fill="url(#fullGlow)"/>
+              <defs><radialGradient id="fullGlow" cx=".38" cy=".32"><stop offset="0" stop-color="#FBF3DC"/><stop offset="1" stop-color="#D9BE72" stop-opacity="0"/></radialGradient></defs>
+            </svg>
+          </div>
+          <div class="phase-label">Full Moon</div>
+          <h4>Stewardship</h4>
+          <p>Annual reviews that adapt the plan as your family, the tax code, and the markets keep moving. The work is never finished.</p>
         </div>
       </div>
     </div>
@@ -605,44 +650,37 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
 </section>
 
 <!-- ══ FOUNDER ══ -->
-<section id="founder" style="background:linear-gradient(180deg,#04060E,#0A1128)">
-  <div class="wrap split">
+<section class="band-3" id="founder">
+  <div class="wrap founder-grid">
     <div class="reveal">
-      <div class="shell"><div class="core founder-core">
+      <div class="arch" id="founderArch">
         <img src="assets/edlawit.jpg" alt="Edlawit Sefiu, Founder of CFC" loading="lazy"
-             onerror="this.style.display='none';this.closest('.core').classList.add('no-photo')">
+             onerror="this.remove();document.getElementById('founderArch').classList.add('no-photo')">
         <div class="founder-plate">
           <strong>Edlawit Sefiu</strong>
           <span>Founder · CFC</span>
         </div>
-      </div></div>
+      </div>
     </div>
     <div>
       <span class="eyebrow reveal">Founder</span>
-      <h2 class="serif reveal" data-d="1" style="font-size:clamp(2.3rem,4.2vw,3.6rem);margin:1.4rem 0;color:#fff">Built on vision.<br>Measured in <i class="gold-text">legacy</i>.</h2>
-      <p class="reveal" data-d="2" style="font-weight:300;color:rgba(242,240,234,.66);max-width:32rem;margin-bottom:.5rem">Edlawit Sefiu founded CFC on a conviction that the strategies quietly used by the wealthy belong in every room where a family is ready to build. She leads with clarity over jargon, patience over pressure, and a standard of care that treats each plan as though it were her own family's.</p>
-      <blockquote class="reveal" data-d="2">"Prosperity is not the number in the account. It is the certainty that the people you love will never have to start over."<footer style="font-size:.75rem;font-style:normal;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,240,234,.5);margin-top:1rem">— Edlawit Sefiu</footer></blockquote>
+      <h2 class="serif reveal" data-d="1" style="font-size:clamp(2.2rem,4.4vw,3.5rem);margin:1.5rem 0;color:#fff">Built on vision.<br>Measured in <i class="gold-text">legacy</i>.</h2>
+      <p class="reveal" data-d="2" style="font-weight:300;color:rgba(239,237,230,.62);max-width:32rem">Edlawit Sefiu founded CFC on a conviction that the strategies quietly used by the wealthy belong in every room where a family is ready to build. She leads with clarity over jargon, patience over pressure, and a standard of care that treats each plan as though it were her own family's.</p>
+      <blockquote class="reveal" data-d="2">Prosperity is not the number in the account. It is the certainty that the people you love will never have to start over.</blockquote>
       <div class="pillars">
-        <div class="pillar reveal" data-d="1"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><div><strong>Stewardship over speculation</strong><span>Proven, protected strategies. Never trends, never gambles.</span></div></div>
-        <div class="pillar reveal" data-d="2"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><div><strong>Clarity before commitment</strong><span>You will understand every vehicle before a single dollar moves.</span></div></div>
-        <div class="pillar reveal" data-d="3"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><div><strong>A generational horizon</strong><span>Every plan is stress-tested against a hundred-year family timeline.</span></div></div>
+        <div class="pillar reveal" data-d="1">
+          <svg class="tick" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M20 5a15 15 0 0 1 0 30 11 11 0 0 0 0-30z" fill="#D9BE72" opacity=".85"/></svg>
+          <div><strong>Stewardship over speculation</strong><span>Proven, protected strategies. Never trends, never gambles.</span></div>
+        </div>
+        <div class="pillar reveal" data-d="2">
+          <svg class="tick" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M20 5a15 15 0 0 1 0 30z" fill="#D9BE72" opacity=".85"/></svg>
+          <div><strong>Clarity before commitment</strong><span>You will understand every vehicle before a single dollar moves.</span></div>
+        </div>
+        <div class="pillar reveal" data-d="3">
+          <svg class="tick" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><circle cx="20" cy="20" r="15" fill="#D9BE72" opacity=".85"/></svg>
+          <div><strong>A generational horizon</strong><span>Every plan is stress-tested against a hundred-year family timeline.</span></div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ APPROACH ══ -->
-<section class="light" id="approach">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">The Private Client Process</span>
-      <h2 class="serif">Four movements,<br>orchestrated with <i>precision</i>.</h2>
-    </div>
-    <div class="steps">
-      <div class="step reveal"><div class="core"><span class="n">01</span><h4>Discovery</h4><p>A private consultation to map your assets, ambitions, obligations, and the legacy you intend to leave behind.</p></div></div>
-      <div class="step reveal" data-d="1"><div class="core"><span class="n">02</span><h4>Architecture</h4><p>A bespoke blueprint — protection first, growth second, transfer always — modeled to your specific horizon.</p></div></div>
-      <div class="step reveal" data-d="2"><div class="core"><span class="n">03</span><h4>Execution</h4><p>White-glove implementation of every vehicle, handled end to end so nothing falls between the cracks.</p></div></div>
-      <div class="step reveal" data-d="3"><div class="core"><span class="n">04</span><h4>Stewardship</h4><p>Annual reviews that adapt the plan as your family, the tax code, and the markets continue to move.</p></div></div>
     </div>
   </div>
 </section>
@@ -650,26 +688,28 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
 <!-- ══ QUOTE ══ -->
 <section class="quote-sec">
   <div class="wrap">
-    <span class="mark reveal">&ldquo;</span>
+    <svg class="qmoon reveal" viewBox="0 0 100 100"><circle cx="50" cy="50" r="34" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M50 16a34 34 0 0 1 0 68 25 25 0 0 0 0-68z" fill="#D9BE72" opacity=".9"/></svg>
     <blockquote class="reveal" data-d="1">Edlawit didn't sell us a policy. She sat at our table until we actually understood what we owned and why. Our children will inherit a plan, not a problem.</blockquote>
-    <cite class="reveal" data-d="2">— CFC Client Family</cite>
+    <cite class="reveal" data-d="2">CFC Client Family</cite>
   </div>
 </section>
 
 <!-- ══ CTA ══ -->
-<div class="legacy">
-  <div class="shell reveal"><div class="core">
-    <span class="eyebrow">Your Move</span>
-    <h2 class="serif">The best time to build a legacy<br>was a generation ago. <i class="gold-text">The second best is today.</i></h2>
-    <p>One conversation. No obligation. A complete picture of where you stand, and a blueprint for where your family is going.</p>
-    <a href="#contact" class="btn btn-gold" style="font-size:1rem">Schedule Your Private Consultation
-      <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-    </a>
-  </div></div>
-</div>
+<section class="cta-sec">
+  <div class="wrap">
+    <span class="eyebrow reveal">Your Move</span>
+    <h2 class="serif reveal" data-d="1">The best time to begin<br>was a generation ago.<br><i class="gold-text">The second best is tonight.</i></h2>
+    <p class="reveal" data-d="2">One conversation. No obligation. A complete picture of where you stand, and a blueprint for where your family is going.</p>
+    <div class="reveal" data-d="3">
+      <a href="#contact" class="btn btn-gold" style="font-size:1rem">Schedule Your Private Consultation
+        <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- ══ CONTACT ══ -->
-<section class="light" id="contact" style="padding-top:7rem">
+<section class="band-1" id="contact">
   <div class="wrap contact-grid">
     <div class="contact-info">
       <span class="eyebrow reveal">Begin the Conversation</span>
@@ -682,8 +722,8 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
         <div class="c-line"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.2-6-10a6 6 0 1112 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>Serving families nationwide · By appointment</div>
       </div>
     </div>
-    <div class="shell reveal" data-d="2">
-      <form class="core" name="consultation" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field">
+    <div class="reveal" data-d="2">
+      <form class="night" name="consultation" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="consultation">
         <p style="display:none"><label>Do not fill this out: <input name="bot-field"></label></p>
         <div class="f-row">
@@ -701,7 +741,7 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
           </div>
         </div>
         <div class="field"><label for="msg">Tell Us About Your Goals</label><textarea id="msg" name="goals" placeholder="Where would you like your family to be in 30 years?"></textarea></div>
-        <button type="submit" class="btn btn-dark" style="width:100%;justify-content:space-between;padding-left:1.7rem">Request My Consultation
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:space-between;padding-left:1.8rem">Request My Consultation
           <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
         </button>
         <p class="form-note">Private &amp; confidential. Your information is never sold or shared.</p>
@@ -720,8 +760,8 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
       </a>
       <p>Building generational wealth through protection, education, and intentional legacy design.</p>
     </div>
-    <div><h5>Services</h5><a href="#services">Wealth Accumulation</a><a href="#services">Asset Protection</a><a href="#services">Retirement Income</a><a href="#services">Financial Literacy</a><a href="#services">Generational Legacy</a></div>
-    <div><h5>Firm</h5><a href="#founder">Founder</a><a href="#approach">Our Process</a><a href="#contact">Consultations</a></div>
+    <div><h5>Disciplines</h5><a href="#disciplines">Wealth Accumulation</a><a href="#disciplines">Asset Protection</a><a href="#disciplines">Retirement Income</a><a href="#disciplines">Financial Literacy</a><a href="#disciplines">Generational Legacy</a></div>
+    <div><h5>Firm</h5><a href="#phases">The Phases</a><a href="#founder">Founder</a><a href="#contact">Consultations</a></div>
     <div><h5>Connect</h5><a href="mailto:hello@cfcwealth.com">hello@cfcwealth.com</a><a href="tel:+10000000000">(000) 000-0000</a><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></div>
   </div>
   <div class="foot-bottom">
@@ -731,17 +771,14 @@ body>footer{background:#02040A;border-top:1px solid rgba(217,190,114,.15);paddin
 </footer>
 
 <script>
-// ── intro: moon eclipse ──────────────────────────
+// ── intro ────────────────────────────────────────
 (function(){
-  var intro=document.getElementById('intro');
-  var skip=document.getElementById('introSkip');
+  var intro=document.getElementById('intro'), skip=document.getElementById('introSkip');
   if(!intro) return;
-  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen=false;
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches, seen=false;
   try{ seen=sessionStorage.getItem('cfcIntroSeen')==='1'; }catch(e){}
   function end(){
-    intro.classList.add('done');
-    document.body.classList.remove('locked');
+    intro.classList.add('done'); document.body.classList.remove('locked');
     try{ sessionStorage.setItem('cfcIntroSeen','1'); }catch(e){}
   }
   if(reduced||seen){ intro.classList.add('done'); return; }
@@ -759,15 +796,14 @@ var io=new IntersectionObserver(function(es){
   es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-// anything already in view at load reveals immediately — on short viewports the
-// observer's bottom rootMargin was leaving the hero CTAs stuck at opacity 0
+// anything already above the fold reveals immediately (short viewports)
 requestAnimationFrame(function(){
   document.querySelectorAll('.reveal').forEach(function(el){
     if(el.getBoundingClientRect().top < window.innerHeight){ el.classList.add('in'); io.unobserve(el); }
   });
 });
 
-// ── animated counters ────────────────────────────
+// ── counters ─────────────────────────────────────
 var cio=new IntersectionObserver(function(es){
   es.forEach(function(e){
     if(!e.isIntersecting) return;
@@ -783,13 +819,33 @@ var cio=new IntersectionObserver(function(es){
 },{threshold:.6});
 document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
 
-// ── marquee: duplicate track for seamless loop ───
+// ── marquee loop ─────────────────────────────────
 var track=document.getElementById('carrierTrack');
 if(track){
   track.querySelectorAll('.brand-logo').forEach(function(n){
     var c=n.cloneNode(true); c.setAttribute('aria-hidden','true'); track.appendChild(c);
   });
 }
+
+// ── scroll moon waxes with progress + sticky nav ──
+var waxRect=document.getElementById('waxRect'),
+    pctEl=document.getElementById('scrollPct'),
+    moonEl=document.getElementById('scrollMoon'),
+    navEl=document.getElementById('nav'),
+    ticking=false;
+function onScroll(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  var p=h>0?Math.min(Math.max(window.scrollY/h,0),1):0;
+  waxRect.setAttribute('width',(p*100).toFixed(2));
+  pctEl.textContent=Math.round(p*100);
+  moonEl.classList.toggle('show',window.scrollY>window.innerHeight*.4);
+  navEl.classList.toggle('stuck',window.scrollY>80);
+  ticking=false;
+}
+window.addEventListener('scroll',function(){
+  if(!ticking){ ticking=true; requestAnimationFrame(onScroll); }
+},{passive:true});
+onScroll();
 
 // ── mobile menu ──────────────────────────────────
 var burger=document.getElementById('burger'),menu=document.getElementById('menu');
