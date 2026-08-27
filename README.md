@@ -10,7 +10,9 @@ on Netlify.
 index.html       full site (intro, hero, services, founder, process, contact)
 thank-you.html   Netlify form redirect target
 netlify.toml     publish root + security headers
-assets/          logo-original.webp (source logo, from the AMG brokerage marquee)
+assets/          logo.webp       full lockup, background matted out (transparent)
+                 logo-mark.webp  crowned CC only, for nav/footer/watermark
+                 favicon.png     64x64 square
 ```
 
 ## The intro
@@ -23,15 +25,21 @@ in, a shimmer sweeps across, then the wordmark and tagline open underneath.
 - Plays once per browser session (`sessionStorage.cfcIntroSeen`)
 - Fully disabled under `prefers-reduced-motion`
 
-The monogram is inline SVG, not an image — the crescents are real paths
-(circle-minus-offset-circle) so they can animate independently. The same mark is
-reused in the nav, footer, favicon, thank-you page, and the photo placeholder.
+The mark is **her real logo**, not a redraw. The source only exists as a 198x176
+tile with a navy background baked in (pulled from AMG's brokerage marquee), so
+`assets/logo.webp` was made by estimating that background per row, subtracting it,
+and keeping the gold as an alpha matte — then upscaled 4x. It is genuine but soft
+above ~300px on screen. **Replace it with the original high-res file when available.**
+
+The two crescent moons that sweep in ahead of the logo are still SVG, since a
+raster mark cannot be split apart to animate.
 
 ## Before launch — placeholders to replace
 
 | What | Where | Current value |
 |---|---|---|
 | **Headshot** | `assets/edlawit.jpg` | missing — shows a monogram placeholder panel |
+| **High-res logo** | `assets/logo.webp` | recovered from a 198px tile — soft when large |
 | Email | `index.html` contact + footer | `hello@cfcwealth.com` |
 | Phone | `index.html` contact + footer | `(000) 000-0000` |
 | Instagram | `index.html` contact + footer | generic instagram.com link |
