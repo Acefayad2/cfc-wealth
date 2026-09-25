@@ -26,7 +26,9 @@ The moon is the organising idea, not a decoration:
 ## Structure
 
 ```
-index.html       full site (intro, hero, services, founder, process, contact)
+index.html       full site (intro, hero, disciplines, phases, founder, contact)
+agents.html      agent resource hub (noindex) — onboarding path, licensing,
+                 contracting, carriers, compliance, support
 thank-you.html   Netlify form redirect target
 netlify.toml     publish root + security headers
 assets/          logo.webp       full lockup, background matted out (transparent)
@@ -75,3 +77,30 @@ sections pick it up automatically; the placeholder disappears on its own.
 ```
 python3 -m http.server 4187
 ```
+
+
+## Agent resources (`agents.html`)
+
+Linked from the nav, mobile menu, and footer. `noindex` — it is for contracted
+agents, not the public.
+
+Real, working links already in place: NIPR, NAIC state insurance departments,
+Sircon, ExamFX, and all twelve carrier sites. The compliance checklist (AML, CE,
+E&O, product-specific training, non-resident licenses, replacement rules) is
+industry-standard and correct as written.
+
+Sixteen rows are marked **Coming soon** and render dimmed with a pill instead of
+as links. These need CFC's own URLs before launch:
+
+- Contracting: agent portal login, commission schedule, direct deposit form
+- Training: fast start, IUL & annuity fundamentals, the CFC presentation,
+  objection handling
+- Sales tools: quoting software, fact finder, illustration request, client one-pager
+- Case management: submit a case, pending business report, underwriting guidelines
+- Growth: recruiting overview, agency build-out track
+
+Swap each `<span class="rl">…<span class="soon">Coming soon</span></span>` for an
+`<a class="rl" href="…">…<svg class="arw" …></a>` and it becomes a live row.
+
+Agent support contact is `agents@cfcwealth.com` / `(000) 000-0000` — placeholder,
+same as the main site.

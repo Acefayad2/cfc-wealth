@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Resources | CFC</title>
+<meta name="description" content="Everything a CFC agent needs in one place — licensing, contracting, carrier access, training, compliance, and support.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+:root{
+  --void:#02040C;--night:#060B1A;--night-2:#0A1226;--midnight:#101C3A;--slate:#1A2A50;
+  --gold:#B99534;--champagne:#D9BE72;--champagne-bright:#F0DFAC;
+  --silver:#A8BEDC;--silver-dim:#63769A;--cream:#EFEDE6;
+  --ease-glide:cubic-bezier(0.32,0.72,0,1);--ease-out-soft:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',sans-serif;font-weight:300;
+  background:var(--void);color:var(--cream);line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:var(--champagne);color:var(--void)}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");}
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%,rgba(240,223,172,.85),transparent),
+    radial-gradient(1.2px 1.2px at 68% 12%,rgba(168,190,220,.7),transparent),
+    radial-gradient(1px 1px at 32% 62%,rgba(255,255,255,.55),transparent),
+    radial-gradient(1.6px 1.6px at 84% 48%,rgba(240,223,172,.6),transparent),
+    radial-gradient(1px 1px at 54% 82%,rgba(168,190,220,.5),transparent),
+    radial-gradient(1.3px 1.3px at 7% 74%,rgba(240,223,172,.5),transparent);
+  animation:twinkle 9s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.5}50%{opacity:.3}}
+
+.serif{font-family:'Bodoni Moda',serif;font-weight:500;line-height:1.06;letter-spacing:-0.018em}
+.serif i{font-style:italic;font-weight:400}
+.gold-text{background:linear-gradient(105deg,#8C6F24 0%,#D9BE72 42%,#F6EAC6 52%,#B08F30 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-size:10px;font-weight:400;
+  letter-spacing:.34em;text-transform:uppercase;color:var(--silver)}
+.eyebrow::before,.eyebrow::after{content:'';height:1px;width:26px;background:linear-gradient(90deg,transparent,rgba(217,190,114,.7))}
+.eyebrow::after{background:linear-gradient(90deg,rgba(217,190,114,.7),transparent)}
+.reveal{opacity:0;transform:translateY(40px);filter:blur(8px);transition:opacity 1s var(--ease-out-soft),transform 1s var(--ease-out-soft),filter 1s var(--ease-out-soft)}
+.reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
+.reveal[data-d="1"]{transition-delay:.08s}.reveal[data-d="2"]{transition-delay:.16s}
+.reveal[data-d="3"]{transition-delay:.24s}.reveal[data-d="4"]{transition-delay:.32s}
+
+.btn{display:inline-flex;align-items:center;gap:.85rem;border-radius:100px;
+  padding:.62rem .62rem .62rem 1.8rem;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:400;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:transform .5s var(--ease-glide),box-shadow .5s var(--ease-glide),background .5s var(--ease-glide)}
+.btn:active{transform:scale(.98)}
+.btn .orb{width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;transition:transform .5s var(--ease-glide)}
+.btn:hover .orb{transform:translate(3px,-1px)}
+.btn svg{width:14px;height:14px}
+.btn-gold{background:linear-gradient(120deg,#A8842A,#E4CE89 55%,#B99534);color:#140F06;box-shadow:0 14px 34px -16px rgba(217,190,114,.5)}
+.btn-gold:hover{box-shadow:0 20px 44px -16px rgba(217,190,114,.62)}
+.btn-gold .orb{background:rgba(8,6,2,.15)}
+.btn-ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1px rgba(168,190,220,.28)}
+.btn-ghost:hover{background:rgba(168,190,220,.08);box-shadow:inset 0 0 0 1px rgba(168,190,220,.5)}
+.btn-ghost .orb{background:rgba(168,190,220,.12)}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:1.5rem 4vw;transition:padding .6s var(--ease-glide),background .6s var(--ease-glide)}
+nav.stuck{padding:.9rem 4vw;background:rgba(2,4,12,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(168,190,220,.1)}
+.brand{display:flex;align-items:center;gap:.8rem;text-decoration:none}
+.monogram{width:46px;height:41px;flex:none;display:flex;align-items:center;justify-content:center}
+.monogram img{width:100%;height:100%;object-fit:contain;display:block}
+.brand-name{font-family:'Bodoni Moda',serif;font-size:1.1rem;font-weight:500;letter-spacing:.22em;color:var(--cream)}
+.brand-name small{display:block;font-family:'Outfit',sans-serif;font-size:7px;font-weight:300;letter-spacing:.26em;color:var(--silver-dim);text-transform:uppercase;margin-top:2px}
+.nav-right{display:flex;align-items:center;gap:2.4rem}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{position:relative;font-size:.84rem;font-weight:300;color:rgba(239,237,230,.66);text-decoration:none;transition:color .4s var(--ease-glide)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:-6px;height:1px;background:var(--champagne);transition:right .5s var(--ease-glide)}
+.nav-links a:hover,.nav-links a.here{color:var(--champagne-bright)}
+.nav-links a.here::after,.nav-links a:hover::after{right:0}
+.burger{display:none;width:44px;height:44px;border-radius:50%;cursor:pointer;background:rgba(10,18,38,.7);border:1px solid rgba(168,190,220,.18);position:relative}
+.burger span{position:absolute;left:13px;right:13px;height:1.2px;background:var(--champagne-bright);border-radius:2px;transition:transform .55s var(--ease-glide),top .55s var(--ease-glide)}
+.burger span:nth-child(1){top:18px}.burger span:nth-child(2){top:25px}
+.burger.open span:nth-child(1){top:21px;transform:rotate(45deg)}
+.burger.open span:nth-child(2){top:21px;transform:rotate(-45deg)}
+.menu-overlay{position:fixed;inset:0;z-index:90;background:rgba(2,4,12,.94);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
+  display:flex;flex-direction:column;justify-content:center;padding:0 8vw;opacity:0;visibility:hidden;
+  transition:opacity .6s var(--ease-glide),visibility .6s}
+.menu-overlay.open{opacity:1;visibility:visible}
+.menu-overlay a{font-family:'Bodoni Moda',serif;font-size:clamp(2rem,7vw,3.2rem);color:var(--cream);text-decoration:none;
+  padding:.55rem 0;border-bottom:1px solid rgba(168,190,220,.1);opacity:0;transform:translateY(40px);
+  transition:opacity .7s var(--ease-out-soft),transform .7s var(--ease-out-soft),color .4s}
+.menu-overlay a:hover{color:var(--champagne-bright)}
+.menu-overlay.open a{opacity:1;transform:translateY(0)}
+.menu-overlay.open a:nth-child(1){transition-delay:.08s}.menu-overlay.open a:nth-child(2){transition-delay:.14s}
+.menu-overlay.open a:nth-child(3){transition-delay:.2s}.menu-overlay.open a:nth-child(4){transition-delay:.26s}
+.menu-overlay.open a:nth-child(5){transition-delay:.32s}.menu-overlay.open a:nth-child(6){transition-delay:.38s}
+
+/* hero */
+.a-hero{position:relative;z-index:1;padding:11rem 6vw 5rem;text-align:center;overflow:hidden;
+  background:radial-gradient(700px 520px at 50% 22%,rgba(26,42,80,.55),transparent 64%),
+             linear-gradient(180deg,#01020A,#060B1A 60%,#0A1226)}
+.a-hero .moon-glow{position:absolute;left:50%;top:14%;transform:translate(-50%,-50%);width:min(70vw,380px);aspect-ratio:1;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 38% 32%,rgba(240,223,172,.15),rgba(217,190,114,.06) 44%,transparent 70%)}
+.a-hero-inner{position:relative;z-index:2;max-width:46rem;margin:0 auto}
+.a-hero h1{font-size:clamp(2.5rem,6.4vw,4.6rem);margin:1.6rem 0 1.3rem;color:#fff}
+.a-hero p{font-weight:300;color:rgba(239,237,230,.66);font-size:1.02rem;max-width:33rem;margin:0 auto 2.4rem}
+.a-hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center}
+
+/* quick tiles */
+.quick{position:relative;z-index:1;padding:0 6vw;margin-top:-2rem}
+.quick-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+.qt{display:flex;flex-direction:column;gap:.55rem;padding:1.5rem 1.4rem;border-radius:16px;text-decoration:none;
+  background:linear-gradient(168deg,rgba(26,42,80,.55),rgba(10,18,38,.7));
+  border:1px solid rgba(168,190,220,.14);
+  transition:transform .6s var(--ease-glide),border-color .6s var(--ease-glide),background .6s var(--ease-glide)}
+.qt:hover{transform:translateY(-5px);border-color:rgba(217,190,114,.42);background:linear-gradient(168deg,rgba(32,52,98,.6),rgba(12,22,46,.75))}
+.qt svg.qi{width:22px;height:22px;stroke:var(--champagne);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.qt strong{font-size:.95rem;font-weight:500;color:#fff}
+.qt span{font-size:.8rem;font-weight:300;color:rgba(239,237,230,.55)}
+
+section{position:relative;padding:7rem 6vw;z-index:1}
+.wrap{max-width:1280px;margin:0 auto}
+.band-1{background:linear-gradient(180deg,#0A1226,#060B1A)}
+.band-2{background:linear-gradient(180deg,#060B1A,#101C3A 55%,#0A1226)}
+.band-3{background:linear-gradient(180deg,#0A1226,#02040C)}
+.sec-head{max-width:48rem;margin-bottom:3.6rem}
+.sec-head.mid{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head h2{font-size:clamp(2rem,4.2vw,3.2rem);margin:1.3rem 0 1rem;color:#fff}
+.sec-head p{font-weight:300;color:rgba(239,237,230,.62);font-size:1rem;max-width:34rem}
+.sec-head.mid p{margin-left:auto;margin-right:auto}
+
+/* the path — moon phases */
+.path-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;position:relative}
+.path-track{position:absolute;left:0;right:0;top:46px;height:1px;background:linear-gradient(90deg,transparent,rgba(217,190,114,.32) 12%,rgba(217,190,114,.32) 88%,transparent)}
+.step{position:relative;z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center}
+.step-moon{width:92px;height:92px;margin-bottom:1.5rem;flex:none}
+.step-moon svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 22px rgba(217,190,114,.28))}
+.step-n{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--silver-dim);margin-bottom:.6rem}
+.step h4{font-family:'Bodoni Moda',serif;font-size:1.3rem;font-weight:500;color:var(--champagne-bright);margin-bottom:.6rem}
+.step p{font-size:.88rem;font-weight:300;color:rgba(239,237,230,.6);max-width:16rem}
+
+/* resource cards */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.res{display:flex;flex-direction:column;padding:2.1rem 1.9rem;border-radius:18px;
+  background:linear-gradient(168deg,rgba(26,42,80,.4),rgba(10,18,38,.52));
+  border:1px solid rgba(168,190,220,.12);
+  transition:transform .6s var(--ease-glide),border-color .6s var(--ease-glide)}
+.res:hover{transform:translateY(-5px);border-color:rgba(217,190,114,.35)}
+.res h3{font-family:'Bodoni Moda',serif;font-size:1.28rem;font-weight:500;color:#fff;margin-bottom:.6rem}
+.res>p{font-size:.88rem;font-weight:300;color:rgba(239,237,230,.58);margin-bottom:1.3rem}
+.res-links{display:flex;flex-direction:column;gap:.1rem;margin-top:auto}
+.rl{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.72rem 0;border-top:1px solid rgba(168,190,220,.1);
+  font-size:.86rem;font-weight:300;color:rgba(239,237,230,.78);text-decoration:none;
+  transition:color .35s var(--ease-glide),padding-left .35s var(--ease-glide)}
+a.rl:hover{color:var(--champagne-bright);padding-left:.3rem}
+span.rl{color:rgba(239,237,230,.42);cursor:default}
+.rl .arw{width:13px;height:13px;flex:none;stroke:currentColor;stroke-width:1.5;fill:none;opacity:.55;transition:transform .35s var(--ease-glide)}
+a.rl:hover .arw{transform:translate(2px,-2px);opacity:1}
+.rl .soon{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--silver-dim);border:1px solid rgba(168,190,220,.24);border-radius:100px;padding:.14rem .5rem;flex:none}
+
+/* carriers */
+.carrier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
+.carrier{display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+  padding:1.05rem 1.2rem;border-radius:12px;text-decoration:none;
+  background:rgba(10,18,38,.5);border:1px solid rgba(168,190,220,.1);
+  font-size:.87rem;font-weight:300;color:rgba(239,237,230,.8);
+  transition:border-color .4s var(--ease-glide),color .4s var(--ease-glide),background .4s var(--ease-glide)}
+.carrier:hover{border-color:rgba(217,190,114,.4);color:var(--champagne-bright);background:rgba(26,42,80,.55)}
+.carrier svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.5;fill:none;opacity:.5;flex:none}
+.note{margin-top:1.6rem;font-size:.82rem;font-weight:300;color:var(--silver-dim);display:flex;gap:.7rem;align-items:flex-start}
+.note svg{width:15px;height:15px;stroke:var(--champagne);stroke-width:1.3;fill:none;flex:none;margin-top:.22rem}
+
+/* compliance checklist */
+.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem 3rem}
+.chk{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 0;border-bottom:1px solid rgba(168,190,220,.1)}
+.chk .cm{width:26px;height:26px;flex:none;margin-top:.15rem}
+.chk strong{display:block;font-size:.93rem;font-weight:500;color:#fff;margin-bottom:.15rem}
+.chk span{font-size:.85rem;font-weight:300;color:rgba(239,237,230,.56)}
+
+/* support */
+.support{text-align:center;background:linear-gradient(180deg,#02040C,#101C3A);position:relative;overflow:hidden}
+.support::before{content:'';position:absolute;left:50%;bottom:-52%;transform:translateX(-50%);
+  width:min(120vw,820px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 40%,rgba(217,190,114,.18),transparent 62%)}
+.support .wrap{position:relative;z-index:2}
+.support h2{font-size:clamp(2rem,4.6vw,3.4rem);color:#fff;margin:1.4rem 0 1.1rem}
+.support p{font-weight:300;color:rgba(239,237,230,.66);max-width:31rem;margin:0 auto 2.6rem}
+.support-lines{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin-top:2.6rem}
+.sl{display:flex;align-items:center;gap:.7rem;font-size:.9rem;font-weight:300;color:rgba(239,237,230,.78);text-decoration:none;transition:color .4s}
+.sl:hover{color:var(--champagne-bright)}
+.sl svg{width:16px;height:16px;stroke:var(--champagne);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+footer{position:relative;background:var(--void);border-top:1px solid rgba(168,190,220,.1);padding:3.2rem 6vw 2.4rem;z-index:1}
+.foot-in{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;
+  font-size:.74rem;font-weight:300;color:rgba(239,237,230,.34)}
+.foot-in a{color:rgba(239,237,230,.6);text-decoration:none;transition:color .4s}
+.foot-in a:hover{color:var(--champagne-bright)}
+
+@media(max-width:1024px){
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+  .res-grid{grid-template-columns:repeat(2,1fr)}
+  .carrier-grid{grid-template-columns:repeat(3,1fr)}
+  .path-grid{grid-template-columns:repeat(2,1fr);gap:3rem 2rem}
+  .path-track{display:none}
+  .check-grid{grid-template-columns:1fr;gap:0}
+}
+@media(max-width:768px){
+  section{padding:5rem 1.3rem}
+  .a-hero{padding:8rem 1.3rem 4rem}
+  .quick{padding:0 1.3rem}
+  .nav-links{display:none}
+  .burger{display:block}
+  .nav-right>.btn-gold{display:none}
+  .nav-right{gap:1rem}
+  nav,nav.stuck{padding:1rem 1.3rem}
+  .brand-name{font-size:1rem}
+  .monogram{width:40px;height:36px}
+  .quick-grid,.res-grid,.path-grid{grid-template-columns:1fr}
+  .carrier-grid{grid-template-columns:repeat(2,1fr)}
+  .support-lines{gap:1.2rem;flex-direction:column;align-items:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  .reveal{opacity:1;transform:none;filter:none}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="stars" aria-hidden="true"></div>
+
+<nav id="nav">
+  <a class="brand" href="index.html">
+    <span class="monogram"><img src="assets/logo-mark.webp" alt="CFC monogram"></span>
+    <span class="brand-name">CFC<small>Where Vision Meets Prosperity</small></span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html#disciplines">Disciplines</a></li>
+      <li><a href="index.html#phases">The Phases</a></li>
+      <li><a href="index.html#founder">Founder</a></li>
+      <li><a href="agents.html" class="here">Agents</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="#support" class="btn btn-gold">Get Support
+      <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</nav>
+<div class="menu-overlay" id="menu">
+  <a href="index.html#disciplines">Disciplines</a>
+  <a href="index.html#phases">The Phases</a>
+  <a href="index.html#founder">Founder</a>
+  <a href="agents.html">Agents</a>
+  <a href="index.html#contact">Contact</a>
+  <a href="#support" style="color:var(--champagne-bright)">Get Support ↗</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<header class="a-hero" id="top">
+  <div class="moon-glow" aria-hidden="true"></div>
+  <div class="a-hero-inner">
+    <span class="eyebrow reveal">For CFC Agents</span>
+    <h1 class="serif reveal" data-d="1">Everything you need to <i class="gold-text">write business</i></h1>
+    <p class="reveal" data-d="2">Licensing, contracting, carrier access, training, and compliance — gathered in one place so you can spend your time in front of families instead of hunting for links.</p>
+    <div class="a-hero-ctas reveal" data-d="3">
+      <a href="#path" class="btn btn-gold">Start Here
+        <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14m-6-6l6 6 6-6"/></svg></span>
+      </a>
+      <a href="#support" class="btn btn-ghost">Talk to Your Upline
+        <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ══ QUICK ACCESS ══ -->
+<div class="quick">
+  <div class="quick-grid">
+    <a class="qt reveal" href="https://nipr.com" target="_blank" rel="noopener">
+      <svg class="qi" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      <strong>NIPR</strong><span>Apply for and renew your producer license</span>
+    </a>
+    <a class="qt reveal" data-d="1" href="#carriers">
+      <svg class="qi" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>
+      <strong>Carriers</strong><span>Portals for quoting, e-apps, and commissions</span>
+    </a>
+    <a class="qt reveal" data-d="2" href="#training">
+      <svg class="qi" viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 012-2h13v13H6a2 2 0 00-2 2zm0 0a2 2 0 002 2h13"/><path d="M9 8h6M9 12h4"/></svg>
+      <strong>Training</strong><span>Product knowledge and the CFC sales process</span>
+    </a>
+    <a class="qt reveal" data-d="3" href="#compliance">
+      <svg class="qi" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      <strong>Compliance</strong><span>AML, CE, E&amp;O, and suitability</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ THE PATH ══ -->
+<section class="band-1" id="path">
+  <div class="wrap">
+    <div class="sec-head mid reveal">
+      <span class="eyebrow">Onboarding</span>
+      <h2 class="serif">From licensed to <i>producing</i>.</h2>
+      <p>The same way we work with families, we bring agents along one phase at a time. Know which phase you're in, and the next step is never a mystery.</p>
+    </div>
+    <div class="path-grid">
+      <div class="path-track" aria-hidden="true"></div>
+      <div class="step reveal">
+        <div class="step-moon"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/><circle cx="50" cy="50" r="32" fill="rgba(217,190,114,.06)"/></svg></div>
+        <div class="step-n">Phase One</div>
+        <h4>Get Licensed</h4>
+        <p>Complete pre-licensing hours for your state, pass the Life &amp; Health exam, get fingerprinted, and apply through NIPR.</p>
+      </div>
+      <div class="step reveal" data-d="1">
+        <div class="step-moon"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/><path d="M50 18a32 32 0 0 1 0 64 46 46 0 0 0 0-64z" fill="#D9BE72"/></svg></div>
+        <div class="step-n">Phase Two</div>
+        <h4>Get Contracted</h4>
+        <p>Submit contracting through CFC, complete AML and carrier-specific product training, and receive your writing numbers.</p>
+      </div>
+      <div class="step reveal" data-d="2">
+        <div class="step-moon"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/><path d="M50 18a32 32 0 0 1 0 64z" fill="#D9BE72"/></svg></div>
+        <div class="step-n">Phase Three</div>
+        <h4>Get Trained</h4>
+        <p>Learn the products, the CFC presentation, and how to run an appointment end to end. Ride along before you go alone.</p>
+      </div>
+      <div class="step reveal" data-d="3">
+        <div class="step-moon"><svg viewBox="0 0 100 100"><defs><radialGradient id="fg" cx=".38" cy=".32"><stop offset="0" stop-color="#FBF3DC"/><stop offset="1" stop-color="#D9BE72" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="32" fill="none" stroke="rgba(217,190,114,.45)" stroke-width="1.3"/><circle cx="50" cy="50" r="32" fill="#D9BE72"/><circle cx="50" cy="50" r="32" fill="url(#fg)"/></svg></div>
+        <div class="step-n">Phase Four</div>
+        <h4>Start Producing</h4>
+        <p>Work your book with support behind you — case design help, carrier selection, and a weekly rhythm that keeps you consistent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESOURCES ══ -->
+<section class="band-2" id="training">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The Library</span>
+      <h2 class="serif">Resources by <i>category</i>.</h2>
+      <p>Bookmark this page. Anything marked <em style="font-style:normal;color:var(--silver)">Coming soon</em> is being set up now.</p>
+    </div>
+    <div class="res-grid">
+
+      <div class="res reveal">
+        <h3>Licensing</h3>
+        <p>Everything required to get and keep your resident and non-resident licenses.</p>
+        <div class="res-links">
+          <a class="rl" href="https://nipr.com" target="_blank" rel="noopener">NIPR — apply &amp; renew<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <a class="rl" href="https://content.naic.org/state-insurance-departments" target="_blank" rel="noopener">State insurance departments<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <a class="rl" href="https://www.sircon.com" target="_blank" rel="noopener">Sircon — license lookup<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <a class="rl" href="https://www.examfx.com" target="_blank" rel="noopener">ExamFX — pre-licensing<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+
+      <div class="res reveal" data-d="1">
+        <h3>Contracting</h3>
+        <p>Getting appointed with CFC's carriers and receiving your writing numbers.</p>
+        <div class="res-links">
+          <a class="rl" href="#support">Request a contracting packet<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <span class="rl">Agent portal login<span class="soon">Coming soon</span></span>
+          <span class="rl">Commission schedule<span class="soon">Coming soon</span></span>
+          <span class="rl">Direct deposit form<span class="soon">Coming soon</span></span>
+        </div>
+      </div>
+
+      <div class="res reveal" data-d="2">
+        <h3>Training</h3>
+        <p>Product knowledge, the CFC presentation, and how to run an appointment.</p>
+        <div class="res-links">
+          <span class="rl">New agent fast start<span class="soon">Coming soon</span></span>
+          <span class="rl">IUL &amp; annuity fundamentals<span class="soon">Coming soon</span></span>
+          <span class="rl">The CFC presentation<span class="soon">Coming soon</span></span>
+          <span class="rl">Objection handling<span class="soon">Coming soon</span></span>
+        </div>
+      </div>
+
+      <div class="res reveal">
+        <h3>Sales Tools</h3>
+        <p>What you carry into the appointment and what you send afterward.</p>
+        <div class="res-links">
+          <span class="rl">Quoting software<span class="soon">Coming soon</span></span>
+          <span class="rl">Client fact finder<span class="soon">Coming soon</span></span>
+          <span class="rl">Illustration request<span class="soon">Coming soon</span></span>
+          <span class="rl">Branded client one-pager<span class="soon">Coming soon</span></span>
+        </div>
+      </div>
+
+      <div class="res reveal" data-d="1">
+        <h3>Case Management</h3>
+        <p>From submitted application to placed policy, and the follow-ups in between.</p>
+        <div class="res-links">
+          <span class="rl">Submit a new case<span class="soon">Coming soon</span></span>
+          <span class="rl">Pending business report<span class="soon">Coming soon</span></span>
+          <span class="rl">Underwriting guidelines<span class="soon">Coming soon</span></span>
+          <a class="rl" href="#support">Ask a case design question<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+
+      <div class="res reveal" data-d="2">
+        <h3>Growth</h3>
+        <p>For agents ready to build a team rather than only a book.</p>
+        <div class="res-links">
+          <span class="rl">Recruiting overview<span class="soon">Coming soon</span></span>
+          <span class="rl">Agency build-out track<span class="soon">Coming soon</span></span>
+          <a class="rl" href="index.html#phases">The CFC client process<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <a class="rl" href="#support">Talk about leadership<svg class="arw" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CARRIERS ══ -->
+<section class="band-3" id="carriers">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Carrier Access</span>
+      <h2 class="serif">The carriers we <i>write</i>.</h2>
+      <p>Portal access is issued during contracting. Until your writing number is active, these open the carrier's public site.</p>
+    </div>
+    <div class="carrier-grid">
+      <a class="carrier reveal" href="https://www.augustarfinancial.com" target="_blank" rel="noopener">AuguStar Financial<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.athene.com" target="_blank" rel="noopener">Athene<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.northamericancompany.com" target="_blank" rel="noopener">North American<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.fglife.com" target="_blank" rel="noopener">Fidelity &amp; Guaranty<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.pacificlife.com" target="_blank" rel="noopener">Pacific Life<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.standard.com" target="_blank" rel="noopener">The Standard<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.nationwide.com" target="_blank" rel="noopener">Nationwide<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.mutualofomaha.com" target="_blank" rel="noopener">Mutual of Omaha<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.foresters.com" target="_blank" rel="noopener">Foresters Financial<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.nationallife.com" target="_blank" rel="noopener">National Life Group<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.americannational.com" target="_blank" rel="noopener">American National<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      <a class="carrier reveal" href="https://www.silacins.com" target="_blank" rel="noopener">SILAC<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+    </div>
+    <div class="note">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <span>Carrier availability varies by state and by your contract level. If you need a carrier that isn't listed here, ask before you write the case.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMPLIANCE ══ -->
+<section class="band-1" id="compliance">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Stay Clean</span>
+      <h2 class="serif">Compliance, <i>kept current</i>.</h2>
+      <p>None of this is optional, and all of it lapses quietly. Put renewal dates in your calendar the day you complete each one.</p>
+    </div>
+    <div class="check-grid">
+      <div class="chk reveal">
+        <svg class="cm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M14 20l4 4 8-8" stroke="#D9BE72" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><strong>AML training</strong><span>Anti-money-laundering certification, renewed every two years. Most carriers will not release a writing number without it.</span></div>
+      </div>
+      <div class="chk reveal" data-d="1">
+        <svg class="cm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M14 20l4 4 8-8" stroke="#D9BE72" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><strong>Continuing education</strong><span>State CE hours before every license renewal, including any ethics requirement your state sets.</span></div>
+      </div>
+      <div class="chk reveal" data-d="1">
+        <svg class="cm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M14 20l4 4 8-8" stroke="#D9BE72" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><strong>E&amp;O coverage</strong><span>Errors and omissions insurance, active and on file. Check the effective dates, not just the certificate.</span></div>
+      </div>
+      <div class="chk reveal" data-d="2">
+        <svg class="cm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M14 20l4 4 8-8" stroke="#D9BE72" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><strong>Product-specific training</strong><span>Annuity suitability and any carrier product training required in the state where the case is written.</span></div>
+      </div>
+      <div class="chk reveal" data-d="2">
+        <svg class="cm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M14 20l4 4 8-8" stroke="#D9BE72" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><strong>Non-resident licenses</strong><span>A separate license for every state you write in. Add it before the appointment, not after.</span></div>
+      </div>
+      <div class="chk reveal" data-d="3">
+        <svg class="cm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="rgba(217,190,114,.4)" stroke-width="1.2"/><path d="M14 20l4 4 8-8" stroke="#D9BE72" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><strong>Replacement rules</strong><span>If you are replacing existing coverage, the state replacement forms go in with the application every time.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SUPPORT ══ -->
+<section class="support" id="support">
+  <div class="wrap">
+    <span class="eyebrow reveal">Support</span>
+    <h2 class="serif reveal" data-d="1">Never stuck on <i class="gold-text">your own</i>.</h2>
+    <p class="reveal" data-d="2">Licensing question, case design, a carrier that won't call you back — reach out. Faster to ask than to guess.</p>
+    <div class="reveal" data-d="3">
+      <a href="mailto:agents@cfcwealth.com" class="btn btn-gold" style="font-size:.98rem">Email Agent Support
+        <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+      </a>
+    </div>
+    <div class="support-lines reveal" data-d="4">
+      <a class="sl" href="mailto:agents@cfcwealth.com"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>agents@cfcwealth.com</a>
+      <a class="sl" href="tel:+10000000000"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>(000) 000-0000</a>
+      <span class="sl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Mon–Fri · 9am–6pm ET</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <span>© 2026 CFC. Agent resources are for contracted CFC agents.</span>
+    <span><a href="index.html">← Back to CFC Home</a></span>
+  </div>
+</footer>
+
+<script>
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+requestAnimationFrame(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){
+    if(el.getBoundingClientRect().top < window.innerHeight){ el.classList.add('in'); io.unobserve(el); }
+  });
+});
+
+var navEl=document.getElementById('nav'),ticking=false;
+function onScroll(){ navEl.classList.toggle('stuck',window.scrollY>80); ticking=false; }
+window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(onScroll); } },{passive:true});
+onScroll();
+
+var burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',function(){
+  burger.classList.toggle('open'); menu.classList.toggle('open');
+  document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
+});
+menu.querySelectorAll('a').forEach(function(a){
+  a.addEventListener('click',function(){
+    burger.classList.remove('open'); menu.classList.remove('open'); document.body.style.overflow='';
+  });
+});
+</script>
+</body>
+</html>
